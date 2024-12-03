@@ -1,0 +1,14 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/theme.json",
+    "version": 3,
+    "title": "TI-Corp Child Theme",
+    "settings": {
+        "appearanceTools": true,
+        "useRootPaddingAwareAlignments": true,      
+        "color": {
+            "defaultPalette": false,
+            "palette": [
+            ]
+        }
+    }
+}
