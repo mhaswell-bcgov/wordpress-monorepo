@@ -11,9 +11,9 @@
                     "name": "TI-Corp Hero Text Border"
                 },
                 {
-                    "slug": "ticorp-header-secondary",
+                    "slug": "ticorp-heading-secondary",
                     "color": "#0B4D78",
-                    "name": "TI-Corp Header Secondary"
+                    "name": "TI-Corp Heading Secondary"
                 }
             ]
         }
