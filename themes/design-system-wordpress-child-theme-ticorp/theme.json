@@ -3,11 +3,18 @@
     "version": 3,
     "title": "TI-Corp Child Theme",
     "settings": {
-        "appearanceTools": true,
-        "useRootPaddingAwareAlignments": true,      
         "color": {
-            "defaultPalette": false,
             "palette": [
+                 {
+                    "slug": "ticorp-hero-text-border",
+                    "color": "#176A95",
+                    "name": "TI-Corp Hero Text Border"
+                },
+                {
+                    "slug": "ticorp-heading-secondary",
+                    "color": "#0B4D78",
+                    "name": "TI-Corp Heading Secondary"
+                }
             ]
         }
     }
