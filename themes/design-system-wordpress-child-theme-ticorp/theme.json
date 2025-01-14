@@ -5,6 +5,16 @@
     "settings": {
         "color": {
             "palette": [
+                 {
+                    "slug": "ticorp-hero-text-border",
+                    "color": "#176A95",
+                    "name": "TI-Corp Hero Text Border"
+                },
+                {
+                    "slug": "ticorp-header-secondary",
+                    "color": "#0B4D78",
+                    "name": "TI-Corp Header Secondary"
+                }
             ]
         }
     }
