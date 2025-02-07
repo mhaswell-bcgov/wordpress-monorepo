@@ -14,6 +14,11 @@
                     "slug": "ticorp-heading-secondary",
                     "color": "#0B4D78",
                     "name": "TI-Corp Heading Secondary"
+                },
+                {
+                    "slug": "ticorp-footer-background",
+                    "color": "#2D2D2D",
+                    "name": "TI-Corp Footer Background"
                 }
             ]
         }
