@@ -20,31 +20,32 @@
     "email": "govwordpress@gov.bc.ca"
   },
   "engines": {
-    "npm": ">= 10.7.0",
-    "node": ">=20.15.1"
+    "node": "^24.12.0"
   },
   "main": "index.js",
   "devDependencies": {
     "@bcgov/wordpress-eslint": "git+https://github.com/bcgov/wordpress-eslint.git#semver:1.x",
     "@bcgov/wordpress-stylelintrc": "git+https://github.com/bcgov/wordpress-stylelintrc.git#semver:1.x",
+    "@playwright/test": "^1.57.0",
     "@wordpress/base-styles": "^5.7.0",
-    "@wordpress/scripts": "^28.6.0"
+    "@wordpress/scripts": "^28.6.0",
+    "playwright": "^1.57.0",
+    "react-dom": "^18.3.1",
+    "typescript": "^5.9.3"
   },
   "scripts": {
-    "build": "wp-scripts build --output-path=dist",
+    "build": "npm i && wp-scripts build",
     "build:production": "npm ci && npm run fix:css && npm run fix:md && npm run test:unit && npm run build",
     "lint:css": "wp-scripts lint-style 'src/**/*.scss' --allow-empty-input",
     "fix:css": "wp-scripts lint-style 'src/**/*.scss' --fix --allow-empty-input",
-    "lint:js": "wp-scripts lint-js src/**/*.js",
-    "fix:js": "wp-scripts lint-js src/scripts --fix",
-    "format": "wp-scripts format src/",
-    "lint:md": "wp-scripts lint-md-docs --config .markdownlint.json --ignore-path .markdownlintignore",
-    "fix:md": "wp-scripts lint-md-docs --fix",
-    "lint:pkg-json": "wp-scripts lint-pkg-json",
-    "packages-update": "wp-scripts packages-update",
-    "start": "wp-scripts start --output-path=dist",
-    "test:e2e": "wp-scripts test-e2e --passWithNoTests",
-    "test:unit": "wp-scripts test-unit-js --passWithNoTests",
-    "test": "npm run test:unit"
+    "lint:js": "wp-scripts lint-js '{src,tests}/**/*.{js,ts}'",
+    "fix:js": "wp-scripts lint-js '{src,tests}/**/*.{js,ts}' --fix",
+    "test": "wp-scripts test-unit-js --passWithNoTests",
+    "test:e2e": "wp-scripts test-playwright",
+    "test:e2e:help": "wp-scripts test-playwright --help",
+    "test:e2e:debug": "wp-scripts test-playwright --debug",
+    "test:e2e:headed": "wp-scripts test-playwright --headed",
+    "test:unit:php": "wp-env run tests-cli --env-cwd=wp-content/plugins/design-system-wordpress-plugin composer run test",
+    "wp-env": "wp-env"
   }
 }
