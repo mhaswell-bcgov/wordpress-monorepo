@@ -28,6 +28,7 @@
     "@bcgov/wordpress-stylelintrc": "git+https://github.com/bcgov/wordpress-stylelintrc.git#semver:1.x",
     "@playwright/test": "^1.57.0",
     "@wordpress/base-styles": "^5.7.0",
+    "@wordpress/env": "^10.37.0",
     "@wordpress/scripts": "^28.6.0",
     "playwright": "^1.57.0",
     "react-dom": "^18.3.1",
