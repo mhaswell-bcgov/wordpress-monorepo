@@ -52,7 +52,7 @@
     "test:screenshot": "npx playwright test",
     "test:screenshot:update": "npx playwright test --update-snapshots",
     "test:unit": "wp-scripts test-unit-js --passWithNoTests",
-    "test:unit:php": "wp-env run tests-cli --env-cwd=wp-content/plugins/design-system-wordpress-plugin composer run test",
+    "test:unit:php": "wp-env run tests-cli --env-cwd=wp-content/themes/design-system-wordpress-child-theme-ticorp composer run test",
     "test": "npm run test:unit",
     "wp-env": "wp-env"
   }
