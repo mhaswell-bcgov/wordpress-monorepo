@@ -20,22 +20,27 @@
     "email": "govwordpress@gov.bc.ca"
   },
   "engines": {
-    "npm": ">= 10.7.0",
-    "node": ">=20.15.1"
+    "node": "^24.12.0"
   },
   "main": "index.js",
   "devDependencies": {
+    "@bcgov/bc-sans": "^2.1.0",
     "@bcgov/wordpress-eslint": "git+https://github.com/bcgov/wordpress-eslint.git#semver:1.x",
     "@bcgov/wordpress-stylelintrc": "git+https://github.com/bcgov/wordpress-stylelintrc.git#semver:1.x",
+    "@playwright/test": "1.56.1",
     "@wordpress/base-styles": "^5.7.0",
-    "@wordpress/scripts": "^28.6.0"
+    "@wordpress/e2e-test-utils-playwright": "^1.35.0",
+    "@wordpress/env": "^10.35.0",
+    "@wordpress/scripts": "28.6.0",
+    "prettier": "^3.7.4"
   },
   "scripts": {
     "build": "wp-scripts build --output-path=dist",
-    "build:production": "npm ci && npm run fix:css && npm run fix:md && npm run test:unit && npm run build",
+    "build:production": "npm ci && npm run fix:js && npm run fix:css && npm run fix:md && npm run test:unit && npm run build",
     "lint:css": "wp-scripts lint-style 'src/**/*.scss' --allow-empty-input",
     "fix:css": "wp-scripts lint-style 'src/**/*.scss' --fix --allow-empty-input",
-    "lint:js": "wp-scripts lint-js src/**/*.js",
+    "fix:html": "npx prettier ./{parts,patterns,templates}/**/* --write",
+    "lint:js": "wp-scripts lint-js src/scripts",
     "fix:js": "wp-scripts lint-js src/scripts --fix",
     "format": "wp-scripts format src/",
     "lint:md": "wp-scripts lint-md-docs --config .markdownlint.json --ignore-path .markdownlintignore",
@@ -44,7 +49,11 @@
     "packages-update": "wp-scripts packages-update",
     "start": "wp-scripts start --output-path=dist",
     "test:e2e": "wp-scripts test-e2e --passWithNoTests",
+    "test:screenshot": "npx playwright test",
+    "test:screenshot:update": "npx playwright test --update-snapshots",
     "test:unit": "wp-scripts test-unit-js --passWithNoTests",
-    "test": "npm run test:unit"
+    "test:unit:php": "wp-env run tests-cli --env-cwd=wp-content/themes/design-system-wordpress-child-theme-ticorp composer run test",
+    "test": "npm run test:unit",
+    "wp-env": "wp-env"
   }
 }
