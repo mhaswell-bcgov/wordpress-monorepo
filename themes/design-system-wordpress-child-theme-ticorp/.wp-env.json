@@ -1,5 +1,11 @@
 {
     "core": "WordPress/WordPress#6.8",
     "phpVersion": "7.4",
-    "themes": [ "." ]
+    "themes": [
+        ".",
+        "bcgov/design-system-wordpress-theme"
+    ],
+    "lifecycleScripts": {
+        "afterStart": "wp-env run tests-cli wp theme activate design-system-wordpress-child-theme-ticorp"
+    }
 }
