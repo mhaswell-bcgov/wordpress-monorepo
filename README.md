@@ -1,60 +1,80 @@
 # WordPress Monorepo
 
-## Contributing
-
-### Adding an existing Repository to the Monolith
-
-The example below assumes you are adding a theme and uses  
-`example-theme` as a placeholder for your existing repository's name.
-
-> ⚠️ This process rewrites history. Do not run it directly on the original repository.
+This repository contains WordPress themes and plugins managed within a single Git monorepo.
+The primary goals are consistency, shared tooling, and safer long-term maintenance while preserving historical context.
 
 ---
 
-#### Pre-step: Freeze development
+## Contributing
+
+### Adding an Existing Repository to the Monorepo
+
+The example below assumes you are adding a theme and uses `example-theme` as a placeholder for the existing repository name.
+
+> ⚠️ **Important**  
+> This process rewrites Git history. **Do not run it directly on the original repository.**
+
+---
+
+### Migration Process
+
+#### 1. Pre-step: Freeze Development
 
 Before starting the migration:
 
-- Announce a **temporary development freeze** for the theme repository.
-- Ensure all open feature branches are merged or closed.
-- Publish any final releases that must remain in the original repository.
+- Announce a **temporary development freeze** for the repository being migrated
+- Ensure all open feature branches are merged or closed
+- Publish any final releases that must remain in the original repository
 
-#### Create a new clone of the existing repository
+---
+
+#### 2. Clone the Existing Repository
+
+Create a fresh clone that will be rewritten:
 
 ```bash
 git clone git@github.com:bcgov/example-theme.git
-
 cd example-theme
 ```
 
-#### Rewrite history into the new structure
+---
 
-Move the entire repository history under the monorepo path. This rewrites all commits as though the theme has always lived under the target directory.
+#### 3. Rewrite History into the Monorepo Structure
+
+Move the entire repository history so it appears to have always lived under the monorepo path.
 
 ```bash
 git filter-repo --to-subdirectory-filter themes/example-theme
 ```
 
-#### Rename existing tags to avoid conflict
+---
 
-> TODO: Determine naming convention (default to theme/theme-slug)
+#### 4. Rename Existing Tags
+
+Rename tags to avoid collisions with other packages in the monorepo.
+
+> TODO: Finalize naming convention  
+> Default: `themes/<theme-slug>/`
 
 ```bash
 git filter-repo --tag-rename '':'themes/example-theme/'
 ```
 
-#### Merge the rewritten theme into the monorepo
+---
 
-> ⚠️ Assuming this directory structure:
->
-> ```
-> clones/
-> └─ example-theme/
-> wordpress-monorepo/
-> ```
+#### 5. Merge the Rewritten Repository into the Monorepo
+
+Assuming the following directory structure:
+
+```text
+clones/
+└─ example-theme/
+wordpress-monorepo/
+```
+
+From the monorepo root:
 
 ```bash
-cd ../../wordpress-monorepo/
 git remote add example-theme ../clones/example-theme
 git fetch example-theme
 git merge --allow-unrelated-histories example-theme/main
@@ -62,84 +82,90 @@ git merge --allow-unrelated-histories example-theme/main
 
 After the merge, the monorepo should contain:
 
-```
+```text
 themes/
 └─ example-theme/
 ```
 
-#### Confirming history
+---
 
-If successful, you will be able to see the migrated repository's `git history` and `git blame`
+#### 6. Verify History Preservation
+
+Confirm that commit history and blame information are intact.
 
 ```bash
 git log --oneline --graph
-```
-
-Or you can view just the commit history of the migrated theme (from root of the monorepo):
-
-```bash
 git log -- themes/example-theme
-```
-
-Or use `git blame` to confirm line history, authors and timestamps.
-
-```bash
 git blame themes/example-theme/README.md
 ```
 
-#### Additional Branches
+---
 
-Branches besides main can be added as historical references.
+#### 7. Additional Branches
 
-> ⚠️ Do not merge release branches into monorepo main.
+Branches other than `main` may be recreated for historical reference.
 
-Each release branch can be recreated as a namespaced branch:
+> ⚠️ Do not merge release branches into monorepo `main`.
 
 ```bash
 git checkout -b themes/example-theme/release-1.1.0 example-theme/release/1.1.0
 git push origin themes/example-theme/release-1.1.0
 ```
 
-#### Pushing Tags
+---
 
-You can confirm the tags you will push via
+#### 8. Pushing Tags
+
+Review tags locally:
 
 ```bash
 git tag
 ```
 
-Then, push any you are happy with
+If all tags are properly scoped and approved, then push them to the remote:
 
 ```bash
 git push origin --tags
 ```
 
-##### Naming requirements
+**Naming requirements**:
 
-- ⚠️ Raw branch names like release/1.1.0 are not allowed in the monorepo, in order to avoid conflics.
-- All legacy branches must be namespaced by theme or plugin:
+- Raw branch names like `release/1.1.0` are **not allowed**
+- All legacy branches must be namespaced:
   - `themes/example-theme/release-x.x.x`
   - `plugins/example-plugin/release-x.x.x`
 
-#### Cleanup
+---
+
+#### 9. Cleanup
 
 ```bash
 git remote remove example-theme
 ```
 
-### Workflows | CICD
+---
 
-> TODO: Add steps for adapting these.
+## Workflows and CI/CD
 
-#### Release Policy (Current Phase)
+> ⚠️ Not yet finalized
 
-This monorepo does not (currently) produce production releases.
-All official releases continue to be cut from their original repositories.
-Scoped tags and release branches in this monorepo are for historical reference and future planning only.
+Theme- and plugin-level workflows will eventually be replaced by root-level workflows that target packages based on changed paths.
 
-### Package Management
+---
 
-This repository uses npm workspaces to manage JavaScript dependencies across themes and plugins.
+## Release Policy (Current Phase)
+
+- This monorepo **does not produce production releases**
+- Official releases continue to be cut from original repositories
+- Scoped tags and release branches exist for historical reference and future planning
+
+---
+
+## Package Management
+
+### npm Workspaces
+
+This repository uses **npm workspaces** to manage JavaScript dependencies across themes and plugins.
 
 ```json
 {
@@ -147,62 +173,54 @@ This repository uses npm workspaces to manage JavaScript dependencies across the
 }
 ```
 
-This tells npm to:
+This configuration:
 
-- Treat each theme and plugin as an independent package
-- Install dependencies in a single, shared root node_modules where possible
-- Allow workspace scripts (build, test, lint:js) to be run from the root
+- Treats each theme and plugin as an independent package
+- Hoists compatible dependencies to a shared root `node_modules`
+- Enables running scripts across all packages from the repository root
 
-#### Installing Dependencies
+---
 
-Running from repository root:
+### Installing Dependencies
+
+From the repository root:
 
 ```bash
 npm install
 ```
 
-Will:
+This installs root tooling and all workspace dependencies. There is no need to run `npm install` inside individual packages.
 
-- Install root-level tooling (e.g. shared build tools, linters)
-- Install all workspace dependencies declared in:
-  - `themes/*/package.json`
-  - `plugins/*/package.json`
-- 'Hoist' compatible dependencies to the root `node_modules`
+---
 
-There is no need to run `npm install` inside individual themes or plugins in normal usage.
+### Workspace Scripts
 
-#### Workspace Scripts
-
-Commands defined to run in the root package.json, e.g.:
+Example:
 
 ```bash
 npm run build --workspaces --if-present
 ```
 
-Will:
+This runs `build` in each workspace where the script exists, using the workspace directory as the execution context.
 
-- Execute npm run build for each workspace if that script exists in its scoped package.json
-- Set the working directory to the workspace itself
-- Resolve dependencies starting from the workspace directory then walking upward to the root
+---
 
-#### Declaring Dependencies
+### Declaring Dependencies
 
-Each plugin/theme must:
+Each theme or plugin must:
 
-- Include its own package.json
-- Declare all packages it directly depends on
-- Not rely on implicit availability of transitive or peer dependencies
+- Include its own `package.json`
+- Declare all direct dependencies it requires
 
-> ⚠️ Even if a dependency is installed at the root, it should still be listed in the theme if it is required at build or runtime.
+> ⚠️ Do not rely on implicitly hoisted dependencies.
 
-#### Plugins/Themes with Multiple Packages
+---
 
-Each directory with its own `package.json` is a separate npm package and must either:
+### Plugins or Themes with Multiple Packages
 
-- Be included explicitly as a workspace path, or
-- Be managed independently and not rely on workspace execution
+Each directory containing a `package.json` is a separate workspace package and must be explicitly included.
 
-For example:
+Example:
 
 ```json
 {
@@ -214,76 +232,54 @@ For example:
 }
 ```
 
-Each package must:
+---
 
-- Declare its own dependencies
-- Define required scripts (e.g. `build`, `test`, `lint:js`) if it participates in root-level execution
+### Peer Dependency Resolution
 
-#### Peer Dependency Resolution
+Some tooling (e.g. `@wordpress/scripts`) relies on peer dependencies.
 
-Some tooling (e.g. `@wordpress/scripts`) relies on peer dependencies. Because workspace scripts run from the package directory, this can sometimes cause `MODULE_NOT_FOUND` issues. The fix is usually to:
+If a workspace script fails with `MODULE_NOT_FOUND`:
 
 1. Identify the missing module
-2. Add it to the theme or plugin's `devDependencies`
-3. Re-run `npm install` from the repository root.
-
-#### Script Specifications
-
-> TODO: formalize this policy
-
-All packages in this repository must implement the following npm scripts:
-
-- build
-- test
-- lint:js
-
-### pnpm (Experimental)
-
-This repository currently uses **npm workspaces** as the supported and documented package manager.  
-`pnpm` may be evaluated as an **experimental option** due to its strong monorepo support, but it is **not yet part of the official workflow**.
+2. Add it to the workspace’s `devDependencies`
+3. Re-run `npm install` from the repository root
 
 ---
 
-#### Requirements
+### Script Contract (Draft)
 
-- npm remains the official package manager
+All packages must implement the following npm scripts:
+
+- `build`
+- `test`
+- `lint:js`
+
+---
+
+## pnpm (Experimental)
+
+npm is the supported package manager. `pnpm` may be evaluated experimentally but is not part of the official workflow.
+
+### Constraints
+
+- npm remains the source of truth
 - No CI changes
-- No script changes
-- No dependency rewrites beyond what is required to make a build succeed
+- No script contract changes
 
----
-
-#### pnpm workspace configuration
-
-At the repository root, define workspaces of any package.json files, e.g.:
-
+### pnpm Workspace Configuration
+At the repository root, define workspaces of any package.json files in pnpm-workspace.yaml, e.g.:
 ```yaml
-# pnpm-workspace.yaml
 packages:
   - "themes/*"
   - "plugins/*"
   - "plugins/Blocks/*"
 ```
 
-#### Running pnpm Locally
-
-Install dependencies using pnpm:
+### Using pnpm Locally
 
 ```bash
 brew install pnpm
 pnpm install
-```
-
-#### Running Scripts
-
-Run scripts across all workspaces:
-
-```bash
 pnpm -r run build
-```
-
-Or Run scripts for a single theme/plugin:
-
-```bash
 pnpm --filter example-theme run build
 ```
