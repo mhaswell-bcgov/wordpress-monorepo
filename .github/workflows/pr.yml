@@ -2,10 +2,6 @@ name: Pull request checks
 
 on:
   pull_request:
-    # Only run this workflow if the PR touches plugins or themes
-    paths:
-      - 'plugins/**'
-      - 'themes/**'
 
 # Avoid duplicate runs on force-pushes
 concurrency:
