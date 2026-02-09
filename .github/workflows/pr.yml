@@ -28,6 +28,7 @@ jobs:
         runs-on: ubuntu-latest
         outputs:
             projects: ${{ steps.compute.outputs.projects }}
+        continue-on-error: true
         steps:
             - name: Checkout
               uses: actions/checkout@v4
