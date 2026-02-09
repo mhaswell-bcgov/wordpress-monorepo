@@ -81,22 +81,22 @@ jobs:
 
                   echo "projects=$(jq --compact-output --null-input '$ARGS.positional' --args -- "${changed_projects[@]}")" >> "$GITHUB_OUTPUT"
 
-    test:
-        name: Test ${{ matrix.project }}
-        needs: detect-changed-projects
-        if: ${{ needs.detect-changed-projects.outputs.projects != '' && needs.detect-changed-projects.outputs.projects != '[]' }}
-        runs-on: ubuntu-latest
+    # test:
+    #     name: Test ${{ matrix.project }}
+    #     needs: detect-changed-projects
+    #     if: ${{ needs.detect-changed-projects.outputs.projects != '' && needs.detect-changed-projects.outputs.projects != '[]' }}
+    #     runs-on: ubuntu-latest
 
-        strategy:
-            fail-fast: false
-            matrix:
-                project: ${{ fromJSON(needs.detect-changed-projects.outputs.projects) }}
+    #     strategy:
+    #         fail-fast: false
+    #         matrix:
+    #             project: ${{ fromJSON(needs.detect-changed-projects.outputs.projects) }}
 
-        defaults:
-            run:
-                working-directory: ${{ matrix.project }}
+    #     defaults:
+    #         run:
+    #             working-directory: ${{ matrix.project }}
 
-        steps:
+    #     steps:
             # Todo: Run tests when latest plugins and themes are added
             # - name: Install Playwright Browsers
             #   run: npx playwright install --with-deps chromium
