@@ -5,7 +5,7 @@ on:
 
 # Avoid duplicate runs on force-pushes
 concurrency:
-    group: pr-lint-${{ github.event.pull_request.number || github.ref }}
+    group: pr-${{ github.event.pull_request.number || github.ref }}
     cancel-in-progress: true
 
 permissions:
@@ -127,9 +127,6 @@ jobs:
 
             - name: Build
               run: npm run build
-
-            - name: Install Playwright Browsers
-              run: npx playwright install --with-deps chromium
 
             - name: Start wp-env
               run: npm run wp-env start
