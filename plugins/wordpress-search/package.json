@@ -20,15 +20,8 @@
     "url": "https://github.com/bcgov/wordpress-search#readme",
     "email": "govwordpress@gov.bc.ca"
   },
-  "engines": {
-    "npm": ">= 10.9.2",
-    "node": ">=22.16.0"
-  },
   "main": "index.js",
   "type": "module",
-  "dependencies": {
-    "npm": "^11.4.1"
-  },
   "devDependencies": {
     "@wordpress/e2e-test-utils-playwright": "^1.37.0",
     "@wordpress/env": "^10.37.0",
