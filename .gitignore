@@ -1,0 +1,32 @@
+.DS_Store
+node_modules
+vendor
+coverage
+.cache
+.temp
+.idea
+.vscode
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.audit
+.phpdocs
+.phpunit.result.*
+tests/_output
+documentation/docs/.vuepress/dist/**
+documentation/docs/.vuepress/.temp
+documentation/docs/.vuepress/.cache
+documentation/node_modules
+
+# e2e testing artifacts
+artifacts/
+test-results/
+
+# Build files
+dist/
+build/
+
+# nx files
+.nx/cache
+.nx/workspace-data

@@ -1,0 +1,170 @@
+name: Pull request checks
+
+on:
+    pull_request:
+
+# Avoid duplicate runs on force-pushes
+concurrency:
+    group: pr-${{ github.event.pull_request.number || github.ref }}
+    cancel-in-progress: true
+
+permissions:
+    contents: read
+
+jobs:
+    labeler:
+        name: Add labels
+        permissions:
+            contents: read
+            pull-requests: write
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/labeler@v6
+              with:
+                  sync-labels: true
+
+    lint:
+        name: Lint monorepo
+        runs-on: ubuntu-latest
+        continue-on-error: true
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: Install pnpm 
+              uses: pnpm/action-setup@v4
+              with:
+                  version: 10
+                  cache: true
+
+            - name: Setup Node.js 24
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 24
+                  cache: "pnpm"
+
+            - name: Install dependencies
+              run: pnpm install
+
+            - name: Install Composer dependencies
+              run: composer i
+
+            - name: Run css lint
+              run: npm run lint:css
+
+            - name: Run js lint
+              run: npm run lint:js
+
+            - name: Run php lint
+              run: npm run lint:php
+
+    detect-affected-projects:
+        name: Detect affected sub-projects
+        runs-on: ubuntu-latest
+        outputs:
+            projects: ${{ steps.compute.outputs.projects }}
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: Install pnpm
+              uses: pnpm/action-setup@v4
+              with:
+                  version: 10
+                  cache: true
+            
+            - name: Setup Node.js 24
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 24
+                  cache: "pnpm"
+
+            - name: Install dependencies
+              run: pnpm install
+
+            - name: Get affected projects
+              id: compute
+              shell: bash
+              run: |
+                  # Determine correct base/head for PRs
+                  if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+                    git fetch origin "${{ github.base_ref }}:origin/${{ github.base_ref }}"
+                    BASE="origin/${{ github.base_ref }}"
+                    HEAD="${{ github.sha }}"
+                  else
+                    BASE="${{ github.event.before }}"
+                    HEAD="${{ github.sha }}"
+                  fi
+
+                  echo "projects=$(npx nx show projects --base=$BASE --head=$HEAD --affected --json)" >> "$GITHUB_OUTPUT"
+
+    build-and-test:
+        name: Build and Test ${{ matrix.project }}
+        needs: detect-affected-projects
+        if: ${{ needs.detect-affected-projects.outputs.projects != '' && needs.detect-affected-projects.outputs.projects != '[]' }}
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                project: ${{ fromJSON(needs.detect-affected-projects.outputs.projects) }}
+        permissions:
+            contents: write
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Install pnpm 
+              uses: pnpm/action-setup@v4
+              with:
+                  version: 10
+                  cache: true
+
+            - name: Setup Node.js 24
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 24
+                  cache: "pnpm"
+
+            - name: Install dependencies
+              run: pnpm install
+
+            - name: Install Composer dependencies
+              run: npx nx run ${{ matrix.project }}:composer:install
+
+            - name: Install Playwright dependencies
+              run: npx playwright install --with-deps
+
+            - name: Build
+              run: npx nx run ${{ matrix.project }}:build
+
+            - name: Start wp-env
+              run: npx nx run ${{ matrix.project }}:wp-env:start
+
+            - name: Run JS unit tests
+              run: npx nx run ${{ matrix.project }}:test:unit:js
+
+            - name: Run e2e tests
+              run: npx nx run ${{ matrix.project }}:test:e2e
+
+            - uses: actions/upload-artifact@v4
+              if: ${{ !cancelled() }}
+              with:
+                  name: playwright-report
+                  path: artifacts/test-results/
+                  retention-days: 30
+
+            - name: Run screenshot updates
+              run: npx nx run ${{ matrix.project }}:test:screenshot
+
+            - name: Run PHP integration tests
+              run: npx nx run ${{ matrix.project }}:test:integration
+
+            # Todo: Determine how to allow bot commits without retriggering default CodeQL check.
+            # - name: Commit and push updates
+            #   uses: stefanzweifel/git-auto-commit-action@v7.1.0
+            #   with:
+            #     commit_message: 'Update e2e snapshots (committed automatically via Visual Regression workflow) [skip ci]'

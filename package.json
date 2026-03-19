@@ -1,0 +1,77 @@
+{
+    "name": "bcgov-wordpress-monorepo",
+    "version": "0.0.1",
+    "private": true,
+    "description": "BC Government WordPress themes and plugins monorepo",
+    "author": "govwordpress@gov.bc.ca",
+    "license": "GPL-2.0-or-later",
+    "keywords": [
+        "bcgov",
+        "wordpress",
+        "monorepo",
+        "plugins",
+        "themes"
+    ],
+    "homepage": "https://github.com/bcgov/wordpress-monorepo",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/bcgov/wordpress-monorepo"
+    },
+    "bugs": "https://github.com/bcgov/wordpress-monorepo/issues",
+    "engines": {
+        "node": "^24.12.0"
+    },
+    "workspaces": [
+        "themes/*",
+        "plugins/*",
+        "packages/*"
+    ],
+    "devDependencies": {
+        "@nx/plugin": "^22.5.4",
+        "@playwright/test": "^1.58.2",
+        "@swc-node/register": "~1.11.1",
+        "@swc/cli": "~0.8.0",
+        "@swc/core": "~1.15.5",
+        "@swc/helpers": "~0.5.18",
+        "@types/node": "20.19.9",
+        "@wordpress/env": "^10.39.0",
+        "@wordpress/scripts": "^31.5.0",
+        "@wordpress/stylelint-config": "^23.32.0",
+        "eslint-plugin-playwright": "^2.7.0",
+        "eslint-plugin-prefer-arrow": "^1.2.3",
+        "js-beautify": "^1.15.4",
+        "nx": "22.5.0",
+        "prettier": "~3.6.2",
+        "tslib": "^2.3.0",
+        "typescript": "~5.9.2"
+    },
+    "scripts": {
+        "build": "npx nx run-many -t build",
+        "start": "npx nx watch --all -- nx run \\$NX_PROJECT_NAME:start --no-watch",
+        "test": "npx nx run-many -t test",
+        "composer:install": "npx nx run-many -t composer:install",
+        "test:e2e": "npm run test:e2e",
+        "test:integration": "npm run test:integration",
+        "test:screenshot:update": "npm run test:screenshot:update",
+        "test:unit:js": "npm run test:unit:js",
+        "test:unit:php": "npm run test:unit:php",
+        "lint": "npm run lint:js && npm run lint:css && npm run lint:php && npm run lint:html && npm run lint:md && npm run lint:pkg-json",
+        "lint:js": "wp-scripts lint-js",
+        "fix:js": "wp-scripts lint-js --fix",
+        "lint:css": "wp-scripts lint-style",
+        "fix:css": "wp-scripts lint-style --fix",
+        "lint:php": "composer run lint:php",
+        "fix:php": "composer run fix:php",
+        "fix:html": "npx js-beautify --html {themes,plugins}/**/{parts,patterns,templates}/**/*",
+        "lint:md": "wp-scripts lint-md-docs",
+        "fix:md": "wp-scripts lint-md-docs --fix",
+        "lint:pkg-json": "wp-scripts lint-pkg-json",
+        "format": "wp-scripts format",
+        "check-engines": "wp-scripts check-engines",
+        "check-licenses": "wp-scripts check-licenses --prod",
+        "wp-env": "wp-env"
+    },
+    "dependencies": {
+        "@nx/devkit": "22.5.4"
+    }
+}
