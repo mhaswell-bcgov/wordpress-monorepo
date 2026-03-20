@@ -6,6 +6,7 @@ import {
 } from '@nx/devkit';
 import * as path from 'path';
 import { ThemeGeneratorGeneratorSchema } from './schema';
+import { updateLabeler } from '../helpers';
 
 export async function themeGeneratorGenerator(
     tree: Tree,
@@ -26,6 +27,7 @@ export async function themeGeneratorGenerator(
         projectRoot,
         options
     );
+    updateLabeler(tree, options);
     await formatFiles( tree );
 }
 
