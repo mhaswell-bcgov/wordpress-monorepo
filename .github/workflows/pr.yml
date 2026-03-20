@@ -52,13 +52,13 @@ jobs:
               run: composer i
 
             - name: Run css lint
-              run: npm run lint:css
+              run: pnpm run lint:css
 
             - name: Run js lint
-              run: npm run lint:js
+              run: pnpm run lint:js
 
             - name: Run php lint
-              run: npm run lint:php
+              run: pnpm run lint:php
 
     detect-affected-projects:
         name: Detect affected sub-projects

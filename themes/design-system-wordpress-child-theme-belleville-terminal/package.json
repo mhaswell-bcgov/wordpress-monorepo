@@ -33,6 +33,7 @@
         "@wordpress/scripts": "^28.6.0"
     },
     "scripts": {
+        "composer:install": "composer i",
         "build": "wp-scripts build --output-path=dist",
         "build:production": "npm ci && npm run fix:css && npm run fix:md && npm run test:unit && npm run build",
         "start": "wp-scripts start --output-path=dist",
