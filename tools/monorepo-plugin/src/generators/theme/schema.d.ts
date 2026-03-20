@@ -1,5 +1,5 @@
 import { WordPressGeneratorSchema } from "../helpers";
 
-export interface ThemeGeneratorGeneratorSchema extends WordPressGeneratorSchema {
+export interface ThemeGeneratorSchema extends WordPressGeneratorSchema {
     parentTheme: string;
 }
