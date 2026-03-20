@@ -4,6 +4,7 @@ module.exports = {
     ignoreFontFamilies: [ 'BCSans' ],
     ignoreFiles: [ '**/dist/**' ],
     rules: {
+        'plugin-wpds/no-unknown-ds-tokens': null,
         'selector-class-pattern': null,
         'no-descending-specificity': null,
         'scss/selector-no-redundant-nesting-selector': null,
