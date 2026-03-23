@@ -28,7 +28,7 @@ export const updateLabeler = async (
     type: WordPressProjectType = WordPressProjectType.Theme
 ) => {
     const filePath = `.github/labeler.yml`;
-    const contents = (tree.read( filePath ) ?? Buffer.alloc(0)).toString();
+    const contents = ( tree.read( filePath ) ?? Buffer.alloc( 0 ) ).toString();
     const pathPrefix =
         type === WordPressProjectType.Theme ? 'themes' : 'plugins';
     const newContents = contents.concat(

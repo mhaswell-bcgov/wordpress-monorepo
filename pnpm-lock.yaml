@@ -72,7 +72,7 @@ importers:
         specifier: '*'
         version: 31.4.0(@playwright/test@1.58.2)(@swc/core@1.15.21(@swc/helpers@0.5.19))(@types/eslint@9.6.1)(@types/node@20.19.9)(@types/webpack@4.41.40)(@wordpress/env@10.39.0(@types/node@20.19.9))(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass-embedded@1.97.3)(stylelint-scss@6.14.0(stylelint@16.26.1(typescript@5.9.3)))(type-fest@4.41.0)(typescript@5.9.3)
 
-  plugins/test-plugin-rename:
+  plugins/visual-regression-plugin:
     dependencies:
       '@wordpress/block-editor':
         specifier: latest
@@ -3739,10 +3739,6 @@ packages:
       '@playwright/test': '>=1'
       '@types/node': ^20.17.10
 
-  '@wordpress/element@6.40.0':
-    resolution: {integrity: sha512-OhU8B2xEGg7c41rh/VRiJLOz6TnM/r5r8sraAg5ISc2bF7s2oAFqLwvlR0/U6ervyYwbK644osWZGQxFyL3huA==}
-    engines: {node: '>=18.12.0', npm: '>=8.19.2'}
-
   '@wordpress/element@6.42.0':
     resolution: {integrity: sha512-aSuifJL9MF0xrAynWSWxIuhgagJcVwSWrqIpLwX0DZasQ0LKsJe08SmuDe/z3sgOymGG6cOd/GHv0fLwQe8VFQ==}
     engines: {node: '>=18.12.0', npm: '>=8.19.2'}
@@ -3965,10 +3961,6 @@ packages:
 
   '@wordpress/priority-queue@3.42.0':
     resolution: {integrity: sha512-XNi5PWOCz6Y8YSNl7PDNx+CPoADxzRvYhfxCdzJbX4Za5HZi7/qfrIIUI6GIETRPRvWSCI9TZmctRFjBg1mq3Q==}
-    engines: {node: '>=18.12.0', npm: '>=8.19.2'}
-
-  '@wordpress/private-apis@1.40.0':
-    resolution: {integrity: sha512-68cwZKVq8Xy8GBzKoDRuV4b3pQ4nJFItY689HXp+poc0XXrnAeC4ZhjeSgS1qGRpFo6RVvLjjcaZsN2OrSSMvQ==}
     engines: {node: '>=18.12.0', npm: '>=8.19.2'}
 
   '@wordpress/private-apis@1.42.0':
@@ -15285,7 +15277,7 @@ snapshots:
       '@webassemblyjs/ast': 1.14.1
       '@xtuc/long': 4.2.2
 
-  '@webpack-cli/configtest@2.1.1(webpack-cli@5.1.4)(webpack@5.105.1)':
+  '@webpack-cli/configtest@2.1.1(webpack-cli@5.1.4(webpack-bundle-analyzer@4.10.2)(webpack-dev-server@4.15.2)(webpack@5.105.1))(webpack@5.105.1)':
     dependencies:
       webpack: 5.105.1(@swc/core@1.15.21(@swc/helpers@0.5.19))(webpack-cli@5.1.4)
       webpack-cli: 5.1.4(webpack-bundle-analyzer@4.10.2)(webpack-dev-server@4.15.2)(webpack@5.105.1)
@@ -15295,7 +15287,7 @@ snapshots:
       webpack: 5.105.2(@swc/core@1.15.21(@swc/helpers@0.5.19))(webpack-cli@5.1.4)
       webpack-cli: 5.1.4(webpack-bundle-analyzer@4.10.2)(webpack-dev-server@4.15.2)(webpack@5.105.2)
 
-  '@webpack-cli/info@2.0.2(webpack-cli@5.1.4)(webpack@5.105.1)':
+  '@webpack-cli/info@2.0.2(webpack-cli@5.1.4(webpack-bundle-analyzer@4.10.2)(webpack-dev-server@4.15.2)(webpack@5.105.1))(webpack@5.105.1)':
     dependencies:
       webpack: 5.105.1(@swc/core@1.15.21(@swc/helpers@0.5.19))(webpack-cli@5.1.4)
       webpack-cli: 5.1.4(webpack-bundle-analyzer@4.10.2)(webpack-dev-server@4.15.2)(webpack@5.105.1)
@@ -15305,7 +15297,7 @@ snapshots:
       webpack: 5.105.2(@swc/core@1.15.21(@swc/helpers@0.5.19))(webpack-cli@5.1.4)
       webpack-cli: 5.1.4(webpack-bundle-analyzer@4.10.2)(webpack-dev-server@4.15.2)(webpack@5.105.2)
 
-  '@webpack-cli/serve@2.0.5(webpack-cli@5.1.4)(webpack-dev-server@4.15.2)(webpack@5.105.1)':
+  '@webpack-cli/serve@2.0.5(webpack-cli@5.1.4(webpack-bundle-analyzer@4.10.2)(webpack-dev-server@4.15.2)(webpack@5.105.1))(webpack-dev-server@4.15.2)(webpack@5.105.1)':
     dependencies:
       webpack: 5.105.1(@swc/core@1.15.21(@swc/helpers@0.5.19))(webpack-cli@5.1.4)
       webpack-cli: 5.1.4(webpack-bundle-analyzer@4.10.2)(webpack-dev-server@4.15.2)(webpack@5.105.1)
@@ -15714,16 +15706,6 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@wordpress/element@6.40.0':
-    dependencies:
-      '@types/react': 18.3.28
-      '@types/react-dom': 18.3.7(@types/react@18.3.28)
-      '@wordpress/escape-html': 3.42.0
-      change-case: 4.1.2
-      is-plain-object: 5.0.0
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-
   '@wordpress/element@6.42.0':
     dependencies:
       '@types/react': 18.3.28
@@ -16077,8 +16059,6 @@ snapshots:
   '@wordpress/priority-queue@3.42.0':
     dependencies:
       requestidlecallback: 0.3.0
-
-  '@wordpress/private-apis@1.40.0': {}
 
   '@wordpress/private-apis@1.42.0': {}
 
@@ -16540,8 +16520,8 @@ snapshots:
 
   '@wordpress/theme@0.6.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(stylelint@16.26.1(typescript@5.9.3))':
     dependencies:
-      '@wordpress/element': 6.40.0
-      '@wordpress/private-apis': 1.40.0
+      '@wordpress/element': 6.42.0
+      '@wordpress/private-apis': 1.42.0
       colorjs.io: 0.6.1
       memize: 2.1.1
       react: 18.3.1
@@ -16551,8 +16531,8 @@ snapshots:
 
   '@wordpress/theme@0.7.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(stylelint@16.26.1(typescript@5.9.3))':
     dependencies:
-      '@wordpress/element': 6.40.0
-      '@wordpress/private-apis': 1.40.0
+      '@wordpress/element': 6.42.0
+      '@wordpress/private-apis': 1.42.0
       colorjs.io: 0.6.1
       memize: 2.1.1
       react: 18.3.1
@@ -23980,9 +23960,9 @@ snapshots:
   webpack-cli@5.1.4(webpack-bundle-analyzer@4.10.2)(webpack-dev-server@4.15.2)(webpack@5.105.1):
     dependencies:
       '@discoveryjs/json-ext': 0.5.7
-      '@webpack-cli/configtest': 2.1.1(webpack-cli@5.1.4)(webpack@5.105.1)
-      '@webpack-cli/info': 2.0.2(webpack-cli@5.1.4)(webpack@5.105.1)
-      '@webpack-cli/serve': 2.0.5(webpack-cli@5.1.4)(webpack-dev-server@4.15.2)(webpack@5.105.1)
+      '@webpack-cli/configtest': 2.1.1(webpack-cli@5.1.4(webpack-bundle-analyzer@4.10.2)(webpack-dev-server@4.15.2)(webpack@5.105.1))(webpack@5.105.1)
+      '@webpack-cli/info': 2.0.2(webpack-cli@5.1.4(webpack-bundle-analyzer@4.10.2)(webpack-dev-server@4.15.2)(webpack@5.105.1))(webpack@5.105.1)
+      '@webpack-cli/serve': 2.0.5(webpack-cli@5.1.4(webpack-bundle-analyzer@4.10.2)(webpack-dev-server@4.15.2)(webpack@5.105.1))(webpack-dev-server@4.15.2)(webpack@5.105.1)
       colorette: 2.0.20
       commander: 10.0.1
       cross-spawn: 7.0.6
