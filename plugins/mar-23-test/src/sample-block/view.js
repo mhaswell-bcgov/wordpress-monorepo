@@ -21,5 +21,5 @@
  */
 
 /* eslint-disable no-console */
-console.log('Hello World! (from sample-block)');
+console.log('Hello World! This is march 23 test block plugin!');
 /* eslint-enable no-console */

@@ -1,5 +1,6 @@
 # === <%= name %> ===
-Contributors:      The WordPress Contributors
+
+Contributors:      The BCGov Custom Web team
 Tags:              block
 Tested up to:      6.8
 Stable tag:        0.0.1
@@ -10,17 +11,43 @@ License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
 This is the long description. No limit, and you can use Markdown (as well as in the following sections).
 
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
 
 ## == Installation ==
 
-This section describes how to install the plugin and get it working.
+1. Upload the plugin files to the `/wp-content/plugins/<%= slug %>` directory.
+2. Activate the plugin through the 'Plugins' screen in WordPress.
 
-e.g.
+## == Local Development ==
 
-1. Upload the plugin files to the `/wp-content/plugins/<%= slug %>` directory, or install the plugin through the WordPress plugins screen directly.
-1. Activate the plugin through the 'Plugins' screen in WordPress
+1. Install JavaScript dependencies: `pnpm install`
+2. Install PHP dependencies: `composer install`
+3. Start local WordPress: `npm run wp-env:start`
+4. In a separate terminal, start block development build: `npm start`
+5. Activate the plugin at `http://localhost:8888/wp-admin/plugins.php`
+
+> **Note:** The block will not appear in the editor until step 4 has been run at
+> least once. The plugin requires a `build/` directory produced by `npm start` or
+> `npm run build` to register blocks with WordPress.
+
+### This project includes a `.wp-env.json` for consistent local development
+
+= Ports =
+
+* `port` sets the main local WordPress site port (default in this template: `8888`).
+* `testsPort` sets the WordPress test site port (default in this template: `8889`).
+* `mysqlPort` sets the mapped local MySQL port (default in this template: `3307`).
+
+= Config constants =
+
+* `WP_ENVIRONMENT_TYPE`: marks the site as `local` so code can branch behavior by environment.
+* `WP_DEBUG`: enables WordPress debug mode.
+* `WP_DEBUG_LOG`: writes debug output to `wp-content/debug.log`.
+* `WP_DEBUG_DISPLAY`: controls whether debug messages are shown in page output.
+* `SCRIPT_DEBUG`: forces non-minified core scripts and styles for easier debugging.
+* `DISALLOW_FILE_MODS`: disables plugin/theme/core installs and updates in wp-admin.
+* `AUTOMATIC_UPDATER_DISABLED`: turns off automatic background updates.
+
+These defaults are aimed at reproducible local environments and safer team workflows.
 
 
 ## == Frequently Asked Questions ==
@@ -41,13 +68,3 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 (or jpg, jpeg, gif).
 2. This is the second screen shot
 
-== Changelog ==
-
-= 0.0.1 =
-* Release
-
-== Arbitrary section ==
-
-You may provide arbitrary sections, in the same format as the ones above. This may be of use for extremely complicated
-plugins where more information needs to be conveyed that doesn't fit into the categories of "description" or
-"installation." Arbitrary sections will be shown below the built-in sections outlined above.

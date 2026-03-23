@@ -32,7 +32,7 @@ import './editor.scss';
 export default function Edit() {
 	return (
 		<p { ...useBlockProps() }>
-			{ __( '__TITLE__ – hello from the editor!', '__TEXT_DOMAIN__' ) }
+			{ __( '<%= name %> – hello from the editor!', '<%= slug %>' ) }
 		</p>
 	);
 }

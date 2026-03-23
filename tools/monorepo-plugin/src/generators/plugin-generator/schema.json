@@ -18,19 +18,19 @@
             "description": "Plugin slug. Example: wordpress-search-plugin",
             "$default": {
                 "$source": "argv",
-                "index": 0
+                "index": 1
             },
             "x-prompt": "What slug would you like to use?"
         },
         "description": {
             "type": "string",
-            "description": "Block Plugin description. Example: This plugin provides a search block for WordPress.",
+            "description": "(Optional) Block Plugin description. Example: This plugin provides a search block for WordPress.",
             "$default": {
                 "$source": "argv",
-                "index": 0
+                "index": 2
             },
             "x-prompt": "What description would you like to use?"
         }
     },
-    "required": ["name", "slug", "description"]
+    "required": ["name", "slug"]
 }

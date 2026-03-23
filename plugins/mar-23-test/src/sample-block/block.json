@@ -1,17 +1,17 @@
 {
     "$schema": "https://schemas.wp.org/trunk/block.json",
     "apiVersion": 3,
-    "name": "test-plugin/test2-plugin",
+    "name": "mar-23-test/sample-block",
     "version": "0.0.1",
-    "title": "test2-plugin",
+    "title": "march 23 test",
     "category": "widgets",
     "icon": "media-document",
-    "description": "this is a test of the plugin",
+    "description": "",
     "example": {},
     "supports": {
         "html": false
     },
-    "textdomain": "test2-plugin",
+    "textdomain": "mar-23-test",
     "editorScript": "file:./index.js",
     "editorStyle": "file:./index.css",
     "style": "file:./style-index.css",

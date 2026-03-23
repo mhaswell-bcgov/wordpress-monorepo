@@ -1,17 +1,17 @@
 <?php
 /**
- * Plugin Name:       <%= name %>
- * Description:       <%= description %>
+ * Plugin Name:       march 23 test
+ * Plugin URI:				https://github.com/bcgov/mar-23-test
+ * Description:       
  * Version:           0.0.1
  * Requires at least: 6.8
  * Requires PHP:      7.4
- * Author:            The WordPress Contributors
- * License:           GPL-2.0-or-later
- * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       <%= slug %>
- * Domain Path:       <%= slug %>
+ * Author:            govwordpress@gov.bc.ca
+ * License:           Apache Licence version 2.0
+ * License URI:       https://www.apache.org/licenses/LICENSE-2.0
+ * Text Domain:       mar-23-test
  *
- * @package <%= slug %>
+ * @package mar-23-test
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @see https://make.wordpress.org/core/2025/03/13/more-efficient-block-type-registration-in-6-8/
  * @see https://make.wordpress.org/core/2024/10/17/new-block-type-registration-apis-to-improve-performance-in-wordpress-6-7/
  */
-function sample_block_init() {
+function mar_23_test_init() {
 	wp_register_block_types_from_metadata_collection( __DIR__ . '/build', __DIR__ . '/build/blocks-manifest.php' );
 }
-add_action( 'init', 'sample_block_init' );
+add_action( 'init', 'mar_23_test_init' );
