@@ -21,5 +21,5 @@
  */
 
 /* eslint-disable no-console */
-console.log('Hello World! This is visual-regression-plugin block plugin!');
+console.log( 'Hello World! This is visual-regression-plugin block plugin!' );
 /* eslint-enable no-console */

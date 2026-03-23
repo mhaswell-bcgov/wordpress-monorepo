@@ -31,11 +31,11 @@ import './editor.scss';
  */
 const Edit = () => {
     return (
-        <p {...useBlockProps()}>
-            {__(
+        <p { ...useBlockProps() }>
+            { __(
                 'visual-regression-plugin – hello from the editor!',
                 'visual-regression-plugin'
-            )}
+            ) }
         </p>
     );
 };

@@ -21,5 +21,7 @@ test( 'sample block can be inserted and rendered on the frontend', async ( {
 
     const frontendBlock = page.locator( BLOCK_CLASS ).first();
     await expect( frontendBlock ).toBeVisible();
-    await expect( frontendBlock ).toContainText( 'hello from the saved content!' );
+    await expect( frontendBlock ).toContainText(
+        'hello from the saved content!'
+    );
 } );

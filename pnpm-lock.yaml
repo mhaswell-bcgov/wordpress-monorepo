@@ -72,34 +72,6 @@ importers:
         specifier: '*'
         version: 31.4.0(@playwright/test@1.58.2)(@swc/core@1.15.21(@swc/helpers@0.5.19))(@types/eslint@9.6.1)(@types/node@20.19.9)(@types/webpack@4.41.40)(@wordpress/env@10.39.0(@types/node@20.19.9))(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass-embedded@1.97.3)(stylelint-scss@6.14.0(stylelint@16.26.1(typescript@5.9.3)))(type-fest@4.41.0)(typescript@5.9.3)
 
-  plugins/verification-plugin:
-    dependencies:
-      '@wordpress/block-editor':
-        specifier: latest
-        version: 15.15.0(@emotion/is-prop-valid@1.4.0)(@types/react-dom@18.3.7(@types/react@18.3.28))(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(stylelint@16.26.1(typescript@5.9.3))
-      '@wordpress/blocks':
-        specifier: latest
-        version: 15.15.0(react@18.3.1)
-      '@wordpress/i18n':
-        specifier: latest
-        version: 6.15.0
-    devDependencies:
-      '@playwright/test':
-        specifier: ^1.58.0
-        version: 1.58.2
-      '@wordpress-monorepo/e2e':
-        specifier: workspace:*
-        version: link:../../packages/e2e
-      '@wordpress/e2e-test-utils-playwright':
-        specifier: ^1.35.0
-        version: 1.42.0(@playwright/test@1.58.2)(@types/node@20.19.9)
-      '@wordpress/env':
-        specifier: ^11.2.0
-        version: 11.2.0(@types/node@20.19.9)
-      '@wordpress/scripts':
-        specifier: ^31.7.0
-        version: 31.7.0(@playwright/test@1.58.2)(@swc/core@1.15.21(@swc/helpers@0.5.19))(@types/eslint@9.6.1)(@types/node@20.19.9)(@types/webpack@4.41.40)(@wordpress/env@11.2.0(@types/node@20.19.9))(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass-embedded@1.97.3)(stylelint-scss@6.14.0(stylelint@16.26.1(typescript@5.9.3)))(type-fest@4.41.0)(typescript@5.9.3)
-
   plugins/visual-regression-plugin:
     dependencies:
       '@wordpress/block-editor':
@@ -15313,7 +15285,7 @@ snapshots:
   '@webpack-cli/configtest@2.1.1(webpack-cli@5.1.4)(webpack@5.105.2)':
     dependencies:
       webpack: 5.105.2(@swc/core@1.15.21(@swc/helpers@0.5.19))(webpack-cli@5.1.4)
-      webpack-cli: 5.1.4(webpack@5.105.2)
+      webpack-cli: 5.1.4(webpack-bundle-analyzer@4.10.2)(webpack-dev-server@4.15.2)(webpack@5.105.2)
 
   '@webpack-cli/info@2.0.2(webpack-cli@5.1.4(webpack-bundle-analyzer@4.10.2)(webpack-dev-server@4.15.2)(webpack@5.105.1))(webpack@5.105.1)':
     dependencies:
@@ -15323,7 +15295,7 @@ snapshots:
   '@webpack-cli/info@2.0.2(webpack-cli@5.1.4)(webpack@5.105.2)':
     dependencies:
       webpack: 5.105.2(@swc/core@1.15.21(@swc/helpers@0.5.19))(webpack-cli@5.1.4)
-      webpack-cli: 5.1.4(webpack@5.105.2)
+      webpack-cli: 5.1.4(webpack-bundle-analyzer@4.10.2)(webpack-dev-server@4.15.2)(webpack@5.105.2)
 
   '@webpack-cli/serve@2.0.5(webpack-cli@5.1.4(webpack-bundle-analyzer@4.10.2)(webpack-dev-server@4.15.2)(webpack@5.105.1))(webpack-dev-server@4.15.2)(webpack@5.105.1)':
     dependencies:
@@ -15338,11 +15310,6 @@ snapshots:
       webpack-cli: 5.1.4(webpack-bundle-analyzer@4.10.2)(webpack-dev-server@4.15.2)(webpack@5.105.2)
     optionalDependencies:
       webpack-dev-server: 4.15.2(webpack-cli@5.1.4)(webpack@5.105.2)
-
-  '@webpack-cli/serve@2.0.5(webpack-cli@5.1.4)(webpack@5.105.2)':
-    dependencies:
-      webpack: 5.105.2(@swc/core@1.15.21(@swc/helpers@0.5.19))(webpack-cli@5.1.4)
-      webpack-cli: 5.1.4(webpack@5.105.2)
 
   '@wolfy1339/lru-cache@11.0.2-patch.1': {}
 
@@ -24030,23 +23997,6 @@ snapshots:
       webpack-bundle-analyzer: 4.10.2
       webpack-dev-server: 4.15.2(webpack-cli@5.1.4)(webpack@5.105.2)
 
-  webpack-cli@5.1.4(webpack@5.105.2):
-    dependencies:
-      '@discoveryjs/json-ext': 0.5.7
-      '@webpack-cli/configtest': 2.1.1(webpack-cli@5.1.4)(webpack@5.105.2)
-      '@webpack-cli/info': 2.0.2(webpack-cli@5.1.4)(webpack@5.105.2)
-      '@webpack-cli/serve': 2.0.5(webpack-cli@5.1.4)(webpack@5.105.2)
-      colorette: 2.0.20
-      commander: 10.0.1
-      cross-spawn: 7.0.6
-      envinfo: 7.21.0
-      fastest-levenshtein: 1.0.16
-      import-local: 3.2.0
-      interpret: 3.1.1
-      rechoir: 0.8.0
-      webpack: 5.105.2(@swc/core@1.15.21(@swc/helpers@0.5.19))(webpack-cli@5.1.4)
-      webpack-merge: 5.10.0
-
   webpack-dev-middleware@5.3.4(webpack@5.105.1):
     dependencies:
       colorette: 2.0.20
@@ -24140,7 +24090,7 @@ snapshots:
       ws: 8.19.0
     optionalDependencies:
       webpack: 5.105.2(@swc/core@1.15.21(@swc/helpers@0.5.19))(webpack-cli@5.1.4)
-      webpack-cli: 5.1.4(webpack@5.105.2)
+      webpack-cli: 5.1.4(webpack-bundle-analyzer@4.10.2)(webpack-dev-server@4.15.2)(webpack@5.105.2)
     transitivePeerDependencies:
       - bufferutil
       - debug
@@ -24219,7 +24169,7 @@ snapshots:
       watchpack: 2.5.1
       webpack-sources: 3.3.4
     optionalDependencies:
-      webpack-cli: 5.1.4(webpack@5.105.2)
+      webpack-cli: 5.1.4(webpack-bundle-analyzer@4.10.2)(webpack-dev-server@4.15.2)(webpack@5.105.2)
     transitivePeerDependencies:
       - '@swc/core'
       - esbuild

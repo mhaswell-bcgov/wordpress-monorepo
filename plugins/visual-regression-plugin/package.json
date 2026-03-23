@@ -4,7 +4,6 @@
     "description": "Visual regression baseline test plugin",
     "author": "The WordPress Contributors",
     "license": "GPL-2.0-or-later",
-    "main": "build/index.js",
     "keywords": [
         "WordPress",
         "block",
@@ -13,6 +12,7 @@
         "Gutenberg",
         "plugin"
     ],
+    "homepage": "https://github.com/bcgov/wordpress-monorepo",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/bcgov/visual-regression-plugin.git"
@@ -23,6 +23,19 @@
     },
     "engines": {
         "node": "^24.13.0"
+    },
+    "main": "build/index.js",
+    "dependencies": {
+        "@wordpress/block-editor": "latest",
+        "@wordpress/blocks": "latest",
+        "@wordpress/i18n": "latest"
+    },
+    "devDependencies": {
+        "@playwright/test": "^1.58.0",
+        "@wordpress-monorepo/e2e": "workspace:*",
+        "@wordpress/e2e-test-utils-playwright": "^1.35.0",
+        "@wordpress/env": "^11.2.0",
+        "@wordpress/scripts": "^31.7.0"
     },
     "scripts": {
         "build": "wp-scripts build --blocks-manifest",
@@ -43,17 +56,5 @@
         "test": "pnpm run test:unit",
         "wp-env": "wp-env",
         "wp-env:start": "wp-env start --xdebug=coverage"
-    },
-    "dependencies": {
-        "@wordpress/block-editor": "latest",
-        "@wordpress/blocks": "latest",
-        "@wordpress/i18n": "latest"
-    },
-    "devDependencies": {
-        "@wordpress/env": "^11.2.0",
-        "@wordpress/scripts": "^31.7.0",
-        "@playwright/test": "^1.58.0",
-        "@wordpress/e2e-test-utils-playwright": "^1.35.0",
-        "@wordpress-monorepo/e2e": "workspace:*"
     }
 }

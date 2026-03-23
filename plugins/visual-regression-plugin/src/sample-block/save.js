@@ -17,8 +17,8 @@ import { useBlockProps } from '@wordpress/block-editor';
  */
 const save = () => {
     return (
-        <p {...useBlockProps.save()}>
-            {'visual-regression-plugin – hello from the saved content!'}
+        <p { ...useBlockProps.save() }>
+            { 'visual-regression-plugin – hello from the saved content!' }
         </p>
     );
 };
