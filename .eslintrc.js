@@ -61,5 +61,9 @@ module.exports = {
             version: 'detect',
         },
     },
-    ignorePatterns: [ '**/dist/**', 'tools/**/files/**' ],
+    ignorePatterns: [
+        '**/dist/**',
+        'tools/**/files/**',
+        'tools/monorepo-plugin/src/generators/plugin-generator/files/**',
+    ],
 };
