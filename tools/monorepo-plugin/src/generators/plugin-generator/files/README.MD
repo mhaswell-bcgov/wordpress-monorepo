@@ -19,23 +19,20 @@ This is the long description. No limit, and you can use Markdown (as well as in 
 
 ## == Local Development ==
 
-1. Install JavaScript dependencies: `pnpm install`
-2. Install PHP dependencies: `composer install`
-3. Start local WordPress: `npm run wp-env:start`
-4. In a separate terminal, start block development build: `npm start`
-5. Activate the plugin at `http://localhost:8888/wp-admin/plugins.php`
+1. Install dependencies: `pnpm install && composer install`
+2. Start local WordPress: `pnpm run wp-env:start`
+3. In a separate terminal, start block development build: `pnpm start`
+4. Activate the plugin at `http://localhost:8888/wp-admin/plugins.php`
 
-> **Note:** The block will not appear in the editor until step 4 has been run at
-> least once. The plugin requires a `build/` directory produced by `npm start` or
-> `npm run build` to register blocks with WordPress.
+> **Note:** The block will not appear in the editor until step 1 has been run at
+> least once. The plugin requires a `build/` directory produced by `pnpm start` or
+> `pnpm run build` to register blocks with WordPress.
 
 ### This project includes a `.wp-env.json` for consistent local development
 
 = Ports =
 
 * `port` sets the main local WordPress site port (default in this template: `8888`).
-* `testsPort` sets the WordPress test site port (default in this template: `8889`).
-* `mysqlPort` sets the mapped local MySQL port (default in this template: `3307`).
 
 = Config constants =
 

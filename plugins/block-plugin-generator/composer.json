@@ -1,6 +1,6 @@
 {
-    "name": "bcgov-plugin/mar-23-test",
-    "description": "",
+    "name": "bcgov-plugin/block-plugin-generator",
+    "description": "A simple generated Block plugin, including some infrastructure tools.",
     "type": "wordpress-plugin",
     "license": "Apache-2.0",
     "repositories": [
@@ -16,8 +16,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Bcgov\\Mar23Test\\": "src/",
-            "Bcgov\\Mar23Test\\Test\\": "tests/php/"
+            "Bcgov\\BlockPluginGenerator\\": "src/",
+            "Bcgov\\BlockPluginGenerator\\Test\\": "tests/php/"
         }
     },
     "scripts": {

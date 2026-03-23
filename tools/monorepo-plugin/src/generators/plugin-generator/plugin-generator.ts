@@ -11,21 +11,28 @@ export async function pluginGeneratorGenerator(
     tree: Tree,
     options: PluginGeneratorGeneratorSchema
 ) {
-    const projectRoot = `plugins/${options.slug}`;
-    const phpSafeSlug = options.slug.replace(/-/g, '_');
-    const phpNamespace = options.slug
+    const slug = options.name
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^a-z0-9-]/g, '');
+    const description = options.description ?? '';
+    const projectRoot = `plugins/${slug}`;
+    const phpSafeSlug = slug.replace(/-/g, '_');
+    const phpNamespace = slug
         .split('-')
         .map(part => part.charAt(0).toUpperCase() + part.slice(1))
         .join('');
 
-    addProjectConfiguration(tree, options.slug, {
+    addProjectConfiguration(tree, slug, {
         root: projectRoot,
         projectType: 'application',
-        sourceRoot: `${ projectRoot }/src`,
+        sourceRoot: `${projectRoot}/src`,
         targets: {},
     });
     generateFiles(tree, path.join(__dirname, 'files'), projectRoot, {
         ...options,
+        slug,
+        description,
         phpSafeSlug,
         phpNamespace,
     });

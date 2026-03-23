@@ -6,7 +6,7 @@ import { PluginGeneratorGeneratorSchema } from './schema';
 
 describe('plugin-generator generator', () => {
     let tree: Tree;
-    const options: PluginGeneratorGeneratorSchema = { name: 'test', slug: 'test-slug', description: 'Test plugin description' };
+    const options: PluginGeneratorGeneratorSchema = { name: 'Test Plugin', description: 'Test plugin description' };
 
     beforeEach(() => {
         tree = createTreeWithEmptyWorkspace();
@@ -14,7 +14,7 @@ describe('plugin-generator generator', () => {
 
     it('should run successfully', async () => {
         await pluginGeneratorGenerator(tree, options);
-        const config = readProjectConfiguration(tree, options.slug);
+        const config = readProjectConfiguration(tree, 'test-plugin');
         expect(config).toBeDefined();
     });
 });

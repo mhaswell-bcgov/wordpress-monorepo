@@ -1,4 +1,4 @@
-# === march 23 test ===
+# === block-plugin-generator ===
 
 Contributors: The BCGov Custom Web team
 Tags: block
@@ -7,34 +7,31 @@ Stable tag: 0.0.1
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-## == ==
+## == A simple generated Block plugin, including some infrastructure tools. ==
 
 This is the long description. No limit, and you can use Markdown (as well as in the following sections).
 
 ## == Installation ==
 
-1. Upload the plugin files to the `/wp-content/plugins/mar-23-test` directory.
+1. Upload the plugin files to the `/wp-content/plugins/block-plugin-generator` directory.
 2. Activate the plugin through the 'Plugins' screen in WordPress.
 
 ## == Local Development ==
 
-1. Install JavaScript dependencies: `pnpm install`
-2. Install PHP dependencies: `composer install`
-3. Start local WordPress: `npm run wp-env:start`
-4. In a separate terminal, start block development build: `npm start`
-5. Activate the plugin at `http://localhost:8888/wp-admin/plugins.php`
+1. Install dependencies: `pnpm install && composer install`
+2. Start local WordPress: `pnpm run wp-env:start`
+3. In a separate terminal, start block development build: `pnpm start`
+4. Activate the plugin at `http://localhost:8888/wp-admin/plugins.php`
 
-> **Note:** The block will not appear in the editor until step 4 has been run at
-> least once. The plugin requires a `build/` directory produced by `npm start` or
-> `npm run build` to register blocks with WordPress.
+> **Note:** The block will not appear in the editor until step 1 has been run at
+> least once. The plugin requires a `build/` directory produced by `pnpm start` or
+> `pnpm run build` to register blocks with WordPress.
 
 ### This project includes a `.wp-env.json` for consistent local development
 
 = Ports =
 
 - `port` sets the main local WordPress site port (default in this template: `8888`).
-- `testsPort` sets the WordPress test site port (default in this template: `8889`).
-- `mysqlPort` sets the mapped local MySQL port (default in this template: `3307`).
 
 = Config constants =
 

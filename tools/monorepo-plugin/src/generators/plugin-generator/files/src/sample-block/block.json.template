@@ -9,7 +9,21 @@
 	"description": "<%= description %>",
 	"example": {},
 	"supports": {
-		"html": false
+		"html": false,
+		"align": ["wide", "full"],
+		"anchor": true,
+		"color": {
+			"text": true,
+			"background": true,
+			"gradients": false
+		},
+		"typography": {
+			"fontSize": true
+		},
+		"spacing": {
+			"padding": true,
+			"margin": true
+		}
 	},
 	"textdomain": "<%= slug %>",
 	"editorScript": "file:./index.js",

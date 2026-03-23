@@ -21,5 +21,5 @@
  */
 
 /* eslint-disable no-console */
-console.log('Hello World! This is march 23 test block plugin!');
+console.log('Hello World! This is block-plugin-generator block plugin!');
 /* eslint-enable no-console */
