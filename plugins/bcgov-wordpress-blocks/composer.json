@@ -1,6 +1,6 @@
 {
-    "name": "bcgov-plugin/<%= slug %>",
-    "description": "<%= description %>",
+    "name": "bcgov-plugin/bcgov-wordpress-blocks",
+    "description": "Plugin containing blocks intended to be used with the Design System WordPress Theme suite of products.",
     "type": "wordpress-plugin",
     "license": "Apache-2.0",
     "repositories": [
@@ -18,8 +18,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Bcgov\\<%= phpNamespace %>\\": "src/",
-            "Bcgov\\<%= phpNamespace %>\\Test\\": "tests/php/"
+            "Bcgov\\BcgovWordpressBlocks\\": "src/",
+            "Bcgov\\BcgovWordpressBlocks\\Test\\": "tests/php/"
         }
     },
     "scripts": {
