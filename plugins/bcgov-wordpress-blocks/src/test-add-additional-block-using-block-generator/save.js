@@ -17,7 +17,7 @@ import { useBlockProps } from '@wordpress/block-editor';
  */
 const save = () => {
     return (
-        <p {...useBlockProps.save()}>
+        <p { ...useBlockProps.save() }>
             {
                 'Test Add Additional Block Using Block Generator - hello from the saved content!'
             }

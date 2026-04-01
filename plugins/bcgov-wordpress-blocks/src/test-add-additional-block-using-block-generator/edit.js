@@ -31,11 +31,11 @@ import './editor.scss';
  */
 const Edit = () => {
     return (
-        <p {...useBlockProps()}>
-            {__(
+        <p { ...useBlockProps() }>
+            { __(
                 'Test Add Additional Block Using Block Generator - hello from the editor!',
                 'bcgov-wordpress-blocks'
-            )}
+            ) }
         </p>
     );
 };

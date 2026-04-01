@@ -1,6 +1,5 @@
-import { addProjectConfiguration } from '@nx/devkit';
+import { addProjectConfiguration, Tree } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
-import { Tree } from '@nx/devkit';
 
 import { pluginGenerator } from '../plugin/plugin';
 import { blockGenerator } from './block';
