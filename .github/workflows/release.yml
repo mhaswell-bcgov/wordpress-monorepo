@@ -75,9 +75,6 @@ jobs:
       - name: Install Composer dependencies
         run: npx nx run ${{ matrix.project }}:composer-install
 
-      - name: Build project
-        run: npx nx run ${{ matrix.project }}:build
-
       - name: Prepare subtree and build for readonly repo
         shell: bash
         run: |
