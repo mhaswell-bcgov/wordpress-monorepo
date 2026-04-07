@@ -5,6 +5,8 @@
         ".",
         "bcgov/design-system-wordpress-theme"
     ],
+    "port": 9004,
+    "testsPort": 9005,
     "lifecycleScripts": {
         "afterStart": "wp-env run tests-cli wp theme activate design-system-wordpress-child-theme-ticorp"
     }

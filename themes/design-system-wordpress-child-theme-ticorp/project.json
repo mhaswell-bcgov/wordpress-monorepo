@@ -18,6 +18,5 @@
         "wp-env-start": {},
         "wp-env-clean": {}
     },
-    "implicitDependencies": ["packages/phpunit-config/"],
     "tags": ["type:wp-theme"]
 }
