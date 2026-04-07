@@ -1,0 +1,23 @@
+{
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "name": "design-system-wordpress-child-theme-ticorp",
+    "root": "themes/design-system-wordpress-child-theme-ticorp",
+    "sourceRoot": "themes/design-system-wordpress-child-theme-ticorp/src",
+    "projectType": "application",
+    "generators": {
+        "wordpress-monorepo:theme": {
+            "name": "Design System Wordpress Child Theme TI-Corp",
+            "slug": "design-system-wordpress-child-theme-ticorp"
+        }
+    },
+    "targets": {
+        "composer-install": {},
+        "build": {},
+        "start": {},
+        "test-screenshot": {},
+        "wp-env-start": {},
+        "wp-env-clean": {}
+    },
+    "implicitDependencies": ["packages/phpunit-config/"],
+    "tags": ["type:wp-theme"]
+}
