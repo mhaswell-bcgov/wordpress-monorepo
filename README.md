@@ -111,7 +111,8 @@ npx nx import https://github.com/bcgov/design-system-wordpress-theme themes/desi
 1. Copy the contents of the directory the generator created into the imported project directory (the one we renamed in step 1).
     - We want the files to be overwritten with changes from the generator files.
     - You may need to do this outside of VSCode as it doesn't seem to allow overwriting of files by default.
-1. Rename the directory back to its original name.
+1. Delete the generator-created directory.
+1. Rename the imported directory back to its original name.
 1. Go through the files changed using git and individually revert any changes that should not be overwritten, for example plugin/theme version should not be overwritten with the default `1.0.0` set by the generator, any sample files can be deleted.
 1. Delete any unnecessary files, like files used for linting. List of files to be delete:
     - .github/
