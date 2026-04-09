@@ -100,134 +100,31 @@ Example:
 npx nx import https://github.com/bcgov/design-system-wordpress-theme themes/design-system-wordpress-theme
 ```
 
-#### Manual steps
-
-##### 1. Pre-step: Freeze Development
-
-Before starting the migration:
-
-- Announce a **temporary development freeze** for the repository being migrated
-- Ensure all open feature branches are merged or closed
-- Publish any final releases that must remain in the original repository
-
 ---
 
-##### 2. Clone the Existing Repository
+#### Updating migrated plugins/themes to monorepo standard
 
-Create a fresh clone that will be rewritten:
-
-```bash
-git clone git@github.com:bcgov/example-theme.git
-cd example-theme
-```
-
----
-
-##### 3. Rewrite History into the Monorepo Structure
-
-Move the entire repository history so it appears to have always lived under the monorepo path.
-
-```bash
-git filter-repo --to-subdirectory-filter themes/example-theme
-```
-
----
-
-##### 4. Rename Existing Tags
-
-Rename tags to avoid collisions with other packages in the monorepo.
-
-> TODO: Finalize naming convention
-> Default: `themes/<theme-slug>/`
-
-```bash
-git filter-repo --tag-rename '':'themes/example-theme/'
-```
-
----
-
-##### 5. Merge the Rewritten Repository into the Monorepo
-
-Assuming the following directory structure:
-
-```text
-clones/
-└─ example-theme/
-wordpress-monorepo/
-```
-
-From the monorepo root:
-
-```bash
-git remote add example-theme ../clones/example-theme
-git fetch example-theme
-git merge --allow-unrelated-histories example-theme/main
-```
-
-After the merge, the monorepo should contain:
-
-```text
-themes/
-└─ example-theme/
-```
-
----
-
-##### 6. Verify History Preservation
-
-Confirm that commit history and blame information are intact.
-
-```bash
-git log --oneline --graph
-git log -- themes/example-theme
-git blame themes/example-theme/README.md
-```
-
----
-
-##### 7. Additional Branches
-
-Branches other than `main` may be recreated for historical reference.
-
-> ⚠️ Do not merge release branches into monorepo `main`.
-
-```bash
-git checkout -b themes/example-theme/release-1.1.0 example-theme/release/1.1.0
-git push origin themes/example-theme/release-1.1.0
-```
-
----
-
-##### 8. Pushing Tags
-
-Review tags locally:
-
-```bash
-git tag
-```
-
-If all tags are properly scoped and approved, then push them to the remote:
-
-```bash
-git push origin --tags
-```
-
-**Naming requirements**:
-
-- Raw branch names like `release/1.1.0` are **not allowed**
-- All legacy branches must be namespaced:
-    - `themes/example-theme/release-x.x.x`
-    - `plugins/example-plugin/release-x.x.x`
-
----
-
-##### 9. Cleanup
-
-```bash
-git remote remove example-theme
-```
-
----
+1. Temporarily rename the directory of the new project, for example adding a `_` to the beginning.
+    - This is so that the next step can run without causing issues with the directory already existing.
+1. Run the relevant generator for the project type, for example `npx nx generator monorepo-plugin:theme` (or `monorepo-plugin:plugin`).
+1. Provide the values to the generator that match the project, for example if the project's slug is `design-system-child-example`, provide that value to the generator as the slug.
+1. Copy the contents of the directory the generator created into the imported project directory (the one we renamed in step 1).
+    - We want the files to be overwritten with changes from the generator files.
+    - You may need to do this outside of VSCode as it doesn't seem to allow overwriting of files by default.
+1. Delete the generator-created directory.
+1. Rename the imported directory back to its original name.
+1. Go through the files changed using git and individually revert any changes that should not be overwritten, for example plugin/theme version should not be overwritten with the default `1.0.0` set by the generator, any sample files can be deleted.
+1. Delete any unnecessary files, like files used for linting. List of files to be delete:
+    - .github/
+    - dist/
+    - .gitignore
+    - .markdownlint*
+    - CODEOWNERS
+    - composer.lock
+    - package.lock
+1. Commit the above changes.
+1. Run all relevant nx targets to ensure they are functioning. See `project.json` for the full list of targets.
+1. Run linting to ensure linting passes for the imported project (`pnpm lint`).
 
 ## Workflows and CI/CD
 

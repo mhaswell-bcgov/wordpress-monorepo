@@ -81,8 +81,9 @@ jobs:
                   path: artifacts/test-results/
                   retention-days: 30
 
-            - name: Run screenshot updates
-              run: npx nx affected --base="origin/${{ github.base_ref }}" -t test-screenshot
+            # Todo: Re-enable this when it does something useful.
+            # - name: Run screenshot updates
+            #   run: npx nx affected --base="origin/${{ github.base_ref }}" -t test-screenshot
 
             - name: Run PHP integration tests
               run: npx nx affected --base="origin/${{ github.base_ref }}" -t test-integration
