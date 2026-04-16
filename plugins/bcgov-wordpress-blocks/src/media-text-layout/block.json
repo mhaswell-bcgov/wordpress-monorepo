@@ -1,0 +1,37 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "bcgov-wordpress-blocks/media-text-layout",
+    "version": "0.0.1",
+    "title": "Media & Text Layout",
+    "category": "media",
+    "keywords": [
+    "image",
+    "design system"
+    ],
+    "icon": "format-image",
+    "description": "Set media and words side-by-side with adjustable layout.",
+    "example": {},
+    "supports": {
+        "html": false,
+        "align": ["wide", "full"],
+        "anchor": true,
+        "color": {
+            "text": true,
+            "background": true,
+            "gradients": false
+        },
+        "typography": {
+            "fontSize": true
+        },
+        "spacing": {
+            "padding": true,
+            "margin": true
+        }
+    },
+    "textdomain": "bcgov-wordpress-blocks",
+    "editorScript": "file:./index.js",
+    "editorStyle": "file:./index.css",
+    "style": "file:./style-index.css",
+    "viewScript": "file:./view.js"
+}
