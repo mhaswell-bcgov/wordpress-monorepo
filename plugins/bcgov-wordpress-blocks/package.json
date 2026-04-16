@@ -25,5 +25,10 @@
         "@wordpress/block-editor": "latest",
         "@wordpress/blocks": "latest",
         "@wordpress/i18n": "latest"
+    },
+    "devDependencies": {
+        "@playwright/test": "^1.58.2",
+        "@wordpress-monorepo/e2e": "workspace:*",
+        "@wordpress/e2e-test-utils-playwright": "^1.42.0"
     }
 }
