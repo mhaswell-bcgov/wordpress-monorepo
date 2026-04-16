@@ -1,25 +1,41 @@
 /**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
+ * WordPress dependencies
  */
+import { __ } from '@wordpress/i18n';
 import { useBlockProps } from '@wordpress/block-editor';
 
 /**
- * The save function defines the way in which the different attributes should
- * be combined into the final markup, which is then serialized by the block
- * editor into `post_content`.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#save
- *
- * @return {Element} Element to render.
+ * Internal dependencies
  */
-const save = () => {
+import { getIconWrapperClasses } from './icon-classes';
+
+/**
+ * Static markup for the Icon block (attribute validation).
+ *
+ * @param {Object} props            Block props.
+ * @param {Object} props.attributes Persisted attributes.
+ * @return {import('react').ReactElement} Saved output.
+ */
+const save = ( { attributes } ) => {
+    const { iconId, iconSize, isDecorative } = attributes;
+
+    const blockProps = useBlockProps.save( {
+        className: getIconWrapperClasses( { iconSize, isDecorative } ),
+    } );
+
+    const label = iconId
+        ? iconId
+        : __( 'Icon placeholder', 'bcgov-wordpress-blocks' );
+
     return (
-        <p { ...useBlockProps.save() }>
-            { 'Icon - hello from the saved content!' }
-        </p>
+        <div { ...blockProps }>
+            <span
+                className="bcgov-wp-blocks-icon__preview"
+                aria-hidden={ isDecorative ? true : undefined }
+            >
+                { label }
+            </span>
+        </div>
     );
 };
 
