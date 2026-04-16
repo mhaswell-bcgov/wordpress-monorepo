@@ -31,8 +31,8 @@ import './editor.scss';
  */
 const Edit = () => {
     return (
-        <p {...useBlockProps()}>
-            {__('Icon - hello from the editor!', 'bcgov-wordpress-blocks')}
+        <p { ...useBlockProps() }>
+            { __( 'Icon - hello from the editor!', 'bcgov-wordpress-blocks' ) }
         </p>
     );
 };
