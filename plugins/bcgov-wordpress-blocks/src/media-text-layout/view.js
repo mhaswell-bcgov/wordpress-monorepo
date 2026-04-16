@@ -21,5 +21,5 @@
  */
 
 /* eslint-disable no-console */
-console.log('Hello World! This is Media Text Layout block plugin!');
+console.log( 'Hello World! This is Media Text Layout block plugin!' );
 /* eslint-enable no-console */

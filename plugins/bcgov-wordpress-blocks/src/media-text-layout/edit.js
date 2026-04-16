@@ -31,11 +31,11 @@ import './editor.scss';
  */
 const Edit = () => {
     return (
-        <p {...useBlockProps()}>
-            {__(
+        <p { ...useBlockProps() }>
+            { __(
                 'Media Text Layout - hello from the editor!',
                 'bcgov-wordpress-blocks'
-            )}
+            ) }
         </p>
     );
 };
