@@ -4,7 +4,7 @@
     "name": "bcgov-wordpress-blocks/icon",
     "version": "0.0.1",
     "title": "Icon",
-    "category": "widgets",
+    "category": "media",
     "icon": "images-alt",
     "description": "",
     "example": {},
