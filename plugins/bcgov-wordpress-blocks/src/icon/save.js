@@ -16,7 +16,7 @@ import { getIconWrapperClasses } from './icon-classes';
  * @param {Object} props.attributes Persisted attributes.
  * @return {import('react').ReactElement} Saved output.
  */
-export default function save( { attributes } ) {
+const save = ( { attributes } ) => {
     const { iconId, iconSize, isDecorative } = attributes;
 
     const blockProps = useBlockProps.save( {
@@ -37,4 +37,6 @@ export default function save( { attributes } ) {
             </span>
         </div>
     );
-}
+};
+
+export default save;
