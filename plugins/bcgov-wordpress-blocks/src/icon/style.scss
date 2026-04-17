@@ -1,3 +1,11 @@
 /**
- * Front-end + editor shared: layout only. Colour comes from theme / block supports (text colour).
+ * Front-end + editor shared layout only.
+ * Colour comes from theme and block supports (text colour).
  */
+
+.bcgov-wp-blocks-icon__preview {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	vertical-align: middle;
+}

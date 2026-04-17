@@ -23,18 +23,21 @@ const save = ( { attributes } ) => {
         className: getIconWrapperClasses( { iconSize, isDecorative } ),
     } );
 
-    const label = iconId
-        ? iconId
-        : __( 'Icon placeholder', 'bcgov-wordpress-blocks' );
-
     return (
         <div { ...blockProps }>
-            <span
-                className="bcgov-wp-blocks-icon__preview"
-                aria-hidden={ isDecorative ? true : undefined }
-            >
-                { label }
-            </span>
+            { iconId ? (
+                <span
+                    className={ `bcgov-wp-blocks-icon__preview dashicons dashicons-${ iconId }` }
+                    aria-hidden={ isDecorative ? true : undefined }
+                />
+            ) : (
+                <span
+                    className="bcgov-wp-blocks-icon__preview"
+                    aria-hidden={ isDecorative ? true : undefined }
+                >
+                    { __( 'Icon placeholder', 'bcgov-wordpress-blocks' ) }
+                </span>
+            ) }
         </div>
     );
 };

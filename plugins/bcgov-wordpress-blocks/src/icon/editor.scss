@@ -1,4 +1,37 @@
 /**
- * Editor-only layout for the Icon block (no colour tokens; inherits editor text colour).
+ * Editor-only layout for the Icon block.
+ * No colour tokens; inherits editor text colour.
  */
+
+.bcgov-wp-blocks-icon-picker-list {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 0.5rem;
+	max-height: 13.75rem;
+	overflow-y: auto;
+	margin-top: 0.5rem;
+}
+
+.bcgov-wp-blocks-icon-picker-item.components-button {
+	justify-content: flex-start;
+	gap: 0.5rem;
+}
+
+.bcgov-wp-blocks-icon-picker-item .dashicons {
+	margin: 0;
+}
+
+.bcgov-wp-blocks-icon-selected {
+	margin-top: 0.5rem;
+}
+
+.bcgov-wp-blocks-icon-size-buttons {
+	display: flex;
+	width: 100%;
+}
+
+.bcgov-wp-blocks-icon-size-buttons .components-button {
+	flex: 1;
+	justify-content: center;
+}
 
