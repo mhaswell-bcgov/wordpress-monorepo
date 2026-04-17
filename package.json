@@ -27,7 +27,6 @@
         "packages/*"
     ],
     "dependencies": {
-        "@fortawesome/fontawesome-free": "7.2.0",
         "@nx/devkit": "22.5.4",
         "@nx/plugin": "^22.6.2",
         "@playwright/test": "^1.58.2",
