@@ -19,28 +19,8 @@ import {
  * Internal dependencies
  */
 import { getIconWrapperClasses } from './icon-classes';
+import { ICON_ALLOWLIST, ICON_ALLOWLIST_MAP } from './icon-allowlist';
 import './editor.scss';
-
-const ICON_OPTIONS = [
-    { value: 'admin-home', label: 'Home' },
-    { value: 'admin-site', label: 'Site' },
-    { value: 'admin-post', label: 'Post' },
-    { value: 'admin-page', label: 'Page' },
-    { value: 'admin-links', label: 'Links' },
-    { value: 'admin-settings', label: 'Settings' },
-    { value: 'admin-users', label: 'Users' },
-    { value: 'admin-comments', label: 'Comments' },
-    { value: 'calendar-alt', label: 'Calendar' },
-    { value: 'location-alt', label: 'Location' },
-    { value: 'email', label: 'Email' },
-    { value: 'phone', label: 'Phone' },
-    { value: 'menu', label: 'Menu' },
-    { value: 'search', label: 'Search' },
-    { value: 'star-filled', label: 'Star' },
-    { value: 'yes-alt', label: 'Check' },
-    { value: 'warning', label: 'Warning' },
-    { value: 'info', label: 'Info' },
-];
 
 /**
  * The edit component for the Icon block.
@@ -89,7 +69,9 @@ const Edit = ( { attributes, setAttributes } ) => {
         },
     ];
 
-    const filteredIcons = ICON_OPTIONS.filter( ( option ) => {
+    const selectedIcon = ICON_ALLOWLIST_MAP[ iconId ];
+
+    const filteredIcons = ICON_ALLOWLIST.filter( ( option ) => {
         const query = iconQuery.trim().toLowerCase();
         if ( ! query ) {
             return true;
@@ -97,9 +79,27 @@ const Edit = ( { attributes, setAttributes } ) => {
 
         return (
             option.label.toLowerCase().includes( query ) ||
-            option.value.toLowerCase().includes( query )
+            option.id.toLowerCase().includes( query )
         );
     } );
+
+    let previewNode = (
+        <span
+            className="bcgov-wp-blocks-icon__preview"
+            aria-hidden={ isDecorative ? true : undefined }
+        >
+            { __( 'Icon', 'bcgov-wordpress-blocks' ) }
+        </span>
+    );
+
+    if ( selectedIcon ) {
+        previewNode = (
+            <i
+                className={ `bcgov-wp-blocks-icon__preview ${ selectedIcon.faClass }` }
+                aria-hidden={ isDecorative ? true : undefined }
+            />
+        );
+    }
 
     return (
         <>
@@ -123,24 +123,19 @@ const Edit = ( { attributes, setAttributes } ) => {
                             ) }
                         />
                         <div className="bcgov-wp-blocks-icon-picker-list">
-                            { filteredIcons.map( ( { value, label } ) => (
+                            { filteredIcons.map( ( { id, label, faClass } ) => (
                                 <Button
-                                    key={ value }
+                                    key={ id }
                                     __next40pxDefaultSize
                                     variant={
-                                        iconId === value
-                                            ? 'primary'
-                                            : 'secondary'
+                                        iconId === id ? 'primary' : 'secondary'
                                     }
                                     className="bcgov-wp-blocks-icon-picker-item"
                                     onClick={ () =>
-                                        setAttributes( { iconId: value } )
+                                        setAttributes( { iconId: id } )
                                     }
                                 >
-                                    <span
-                                        className={ `dashicons dashicons-${ value }` }
-                                        aria-hidden
-                                    />
+                                    <i className={ faClass } aria-hidden />
                                     <span>{ label }</span>
                                 </Button>
                             ) ) }
@@ -155,7 +150,7 @@ const Edit = ( { attributes, setAttributes } ) => {
                                     'Selected icon:',
                                     'bcgov-wordpress-blocks'
                                 ) }{ ' ' }
-                                <code>{ iconId }</code>
+                                <code>{ selectedIcon?.id || iconId }</code>
                             </Notice>
                         ) : null }
                     </BaseControl>
@@ -208,21 +203,7 @@ const Edit = ( { attributes, setAttributes } ) => {
                     />
                 </PanelBody>
             </InspectorControls>
-            <div { ...blockProps }>
-                { iconId ? (
-                    <span
-                        className={ `bcgov-wp-blocks-icon__preview dashicons dashicons-${ iconId }` }
-                        aria-hidden={ isDecorative ? true : undefined }
-                    />
-                ) : (
-                    <span
-                        className="bcgov-wp-blocks-icon__preview"
-                        aria-hidden={ isDecorative ? true : undefined }
-                    >
-                        { __( 'Icon', 'bcgov-wordpress-blocks' ) }
-                    </span>
-                ) }
-            </div>
+            <div { ...blockProps }>{ previewNode }</div>
         </>
     );
 };
