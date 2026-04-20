@@ -23,4 +23,4 @@ $newEntry = array_merge($localMetadata, [
 $existingJson['packages'][$newEntry['name']][$version] = $newEntry;
 
 // Save back
-file_put_contents('public/packages.json', json_encode($existingJson, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+file_put_contents('../../public/packages.json', json_encode($existingJson, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
