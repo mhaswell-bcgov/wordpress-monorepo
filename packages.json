@@ -1,7 +1,7 @@
 {
     "packages": {
         "bcgov-plugin/bcgov-wordpress-blocks": {
-            "v1.0.0-alpha16": {
+            "": {
                 "name": "bcgov-plugin/bcgov-wordpress-blocks",
                 "description": "Plugin containing blocks intended to be used with the Design System WordPress Theme suite of products.",
                 "type": "wordpress-plugin",
@@ -30,9 +30,9 @@
                         "./vendor/bin/phpunit"
                     ]
                 },
-                "version": "1.0.0-alpha16",
+                "version": "",
                 "dist": {
-                    "url": "https://github.com/bcgov/wordpress-monorepo/releases/download/bcgov-wordpress-blocks/v1.0.0-alpha16/dist.zip",
+                    "url": "https://github.com/mhaswell-bcgov/wordpress-monorepo/releases/download/bcgov-wordpress-blocks/v1.0.0-alpha17/dist.zip",
                     "type": "zip"
                 }
             }
