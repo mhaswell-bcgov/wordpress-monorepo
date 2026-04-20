@@ -64,6 +64,7 @@ jobs:
         with:
           files: ${{ steps.vars.outputs.project_path }}/dist.zip
           tag_name: ${{ steps.vars.outputs.tag }}
+          prerelease: true
 
       - name: Update packages.json
         env:
@@ -75,7 +76,6 @@ jobs:
           curl -sL https://${{ github.repository_owner }}.github.io/wordpress-monorepo/packages.json -o packages.json || echo '{"packages":{}}' > packages.json
 
           mkdir public
-          touch public/packages.json
 
           php .github/scripts/update-packages.php
           
