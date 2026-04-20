@@ -26,9 +26,13 @@ jobs:
 
           if [[ -d "themes/${name}" ]]; then
             echo "type=themes" >> $GITHUB_OUTPUT
-          else
+          elif [[ -d "plugins/${name}" ]]; then
             echo "type=plugins" >> $GITHUB_OUTPUT
+          else
+            echo "Could not determine project type (plugin or theme)."
+            exit 1
           fi
+
 
       - name: Install pnpm 
         uses: pnpm/action-setup@v4
