@@ -51,6 +51,8 @@ jobs:
         working-directory: ${{ steps.vars.outputs.project_path }}
         run: |
             git add -f dist/
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git commit -m "chore: commit build files"
             git archive --output=dist.zip ${{ steps.vars.outputs.tag }} ./
 
