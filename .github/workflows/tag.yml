@@ -37,10 +37,9 @@ jobs:
         run: |
           TAG=${GITHUB_REF#refs/tags/}
           echo "tag=$TAG" >> $GITHUB_OUTPUT
-          echo "name=${TAG%/*}"
           echo "name=${TAG%/*}" >> $GITHUB_OUTPUT
           echo "version=${TAG##*/}" >> $GITHUB_OUTPUT
-          echo "project_path=$(npx nx show project ${name} --json | jq -r .root)" >> $GITHUB_OUTPUT
+          echo "project_path=$(npx nx show project bcgov-wordpress-blocks --json | jq -r .root)" >> $GITHUB_OUTPUT
 
       - name: Install Composer dependencies
         run: npx nx run ${{ steps.vars.outputs.name }}:composer-install
