@@ -5,10 +5,10 @@ $existingJson = file_exists('packages.json') ? json_decode(file_get_contents('pa
 // These variables would be passed from the GH Action environment
 $subprojectName = getenv('SUBPROJECT'); // e.g., "bcgov-wordpress-blocks"
 $version = getenv('VERSION'); // e.g., "v1.2.0"
-$type = getenv( 'TYPE' ); // e.g., 'themes' or 'plugins'
+$path = getenv( 'PATH' ); // e.g., 'themes/theme-a' or 'plugins/plugin-b'
 
 // Load the local composer.json for this subproject to get 'require', 'autoload', etc.
-$localMetadata = json_decode(file_get_contents("$type/$subprojectName/composer.json"), true);
+$localMetadata = json_decode(file_get_contents("$path/composer.json"), true);
 
 // Construct the new version entry
 $newEntry = array_merge($localMetadata, [
@@ -20,7 +20,7 @@ $newEntry = array_merge($localMetadata, [
 ]);
 
 // Update the master array
-$existingJson['packages'][$packageName][$version] = $newEntry;
+$existingJson['packages'][$newEntry['name']][$version] = $newEntry;
 
 // Save back
 file_put_contents('public/packages.json', json_encode($existingJson, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));

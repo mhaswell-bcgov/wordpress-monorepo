@@ -16,15 +16,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Parse Tag
-        id: vars
-        shell: bash
-        run: |
-          TAG=${GITHUB_REF#refs/tags/}
-          echo "tag=$TAG" >> $GITHUB_OUTPUT
-          echo "name=${TAG%/*}" >> $GITHUB_OUTPUT
-          echo "version=${TAG##*/}" >> $GITHUB_OUTPUT
-
       - name: Install pnpm 
         uses: pnpm/action-setup@v4
         with:
@@ -43,14 +34,24 @@ jobs:
       - name: Install Composer dependencies
         run: npx nx run ${{ steps.vars.outputs.name }}:composer-install
 
+      - name: Parse Tag
+        id: vars
+        shell: bash
+        run: |
+          TAG=${GITHUB_REF#refs/tags/}
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          echo "name=${TAG%/*}" >> $GITHUB_OUTPUT
+          echo "version=${TAG##*/}" >> $GITHUB_OUTPUT
+          echo "path=$(npx nx show project ${name} --json | jq -r .root)" >> $GITHUB_OUTPUT
+
       - name: Nx Build
         run: npx nx run ${{ steps.vars.outputs.name }}:build
 
       - name: Zip Artifacts
         run: |
-            path=$(npx nx show project ${{ steps.vars.outputs.name }} --json | jq -r .root)
-            
-            git archive --output=dist.zip ${{ steps.vars.outputs.tag }} ${path}
+            git add -f dist/
+            git commit -m "chore: commit build files"
+            git archive --output=dist.zip ${{ steps.vars.outputs.tag }} ${{ steps.vars.outputs.path }}
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v3
@@ -63,6 +64,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SUBPROJECT: ${{ steps.vars.outputs.name }}
           VERSION: ${{ steps.vars.outputs.version }}
+          PATH: ${{ steps.vars.outputs.path }}
         run: |
           curl -sL https://bcgov.github.io/wordpress-monorepo/public/packages.json -o packages.json || echo '{"packages":{}}' > packages.json
 
