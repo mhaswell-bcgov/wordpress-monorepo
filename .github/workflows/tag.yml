@@ -1,0 +1,78 @@
+name: Release Subproject and Update packages.json
+on:
+  push:
+    tags:
+      - '**/v*'
+
+concurrency: 
+  group: composer-repo-update
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Parse Tag
+        id: vars
+        run: |
+          TAG=${GITHUB_REF#refs/tags/}
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          echo "name=${TAG%/*}" >> $GITHUB_OUTPUT
+          echo "version=${TAG##*/}" >> $GITHUB_OUTPUT
+
+          if [[ -d "themes/${name}" ]]; then
+            echo "type=themes" >> $GITHUB_OUTPUT
+          else
+            echo "type=plugins" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Install pnpm 
+        uses: pnpm/action-setup@v4
+        with:
+            version: 10
+            cache: true
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+            node-version: 24
+            cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Install Composer dependencies
+        run: npx nx run ${{ steps.vars.outputs.name }}:composer-install
+
+      - name: Nx Build
+        run: npx nx ${{ steps.vars.outputs.name }}:build
+
+      - name: Zip Artifacts
+        run: git archive --output=dist.zip ${{ steps.vars.outputs.tag }} ${{ steps.vars.outputs.type }}/${{ steps.vars.outputs.name }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v3
+        with:
+          files: dist.zip
+          tag_name: ${{ steps.vars.outputs.tag }}
+
+      - name: Update packages.json
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SUBPROJECT: ${{ steps.vars.outputs.name }}
+          VERSION: ${{ steps.vars.outputs.version }}
+          TYPE: ${{ steps.vars.outputs.type }}
+        run: |
+          curl -sL https://bcgov.github.io/wordpress-monorepo/public/packages.json -o packages.json || echo '{"packages":{}}' > packages.json
+
+          php .github/scripts/update-packages.php
+          
+      - name: Deploy to GH Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
