@@ -39,7 +39,7 @@ jobs:
           echo "tag=$TAG" >> $GITHUB_OUTPUT
           echo "name=${TAG%/*}" >> $GITHUB_OUTPUT
           echo "version=${TAG##*/}" >> $GITHUB_OUTPUT
-          echo "path=$(npx nx show project ${name} --json | jq -r .root)" >> $GITHUB_OUTPUT
+          echo "project_path=$(npx nx show project ${name} --json | jq -r .root)" >> $GITHUB_OUTPUT
 
       - name: Install Composer dependencies
         run: npx nx run ${{ steps.vars.outputs.name }}:composer-install
@@ -64,7 +64,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SUBPROJECT: ${{ steps.vars.outputs.name }}
           VERSION: ${{ steps.vars.outputs.version }}
-          PATH: ${{ steps.vars.outputs.path }}
+          PROJECT_PATH: ${{ steps.vars.outputs.project_path }}
         run: |
           curl -sL https://bcgov.github.io/wordpress-monorepo/public/packages.json -o packages.json || echo '{"packages":{}}' > packages.json
 

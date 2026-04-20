@@ -5,7 +5,7 @@ $existingJson = file_exists('packages.json') ? json_decode(file_get_contents('pa
 // These variables would be passed from the GH Action environment
 $subprojectName = getenv('SUBPROJECT'); // e.g., "bcgov-wordpress-blocks"
 $version = getenv('VERSION'); // e.g., "v1.2.0"
-$path = getenv( 'PATH' ); // e.g., 'themes/theme-a' or 'plugins/plugin-b'
+$path = getenv( 'PROJECT_PATH' ); // e.g., 'themes/theme-a' or 'plugins/plugin-b'
 
 // Load the local composer.json for this subproject to get 'require', 'autoload', etc.
 $localMetadata = json_decode(file_get_contents("$path/composer.json"), true);
