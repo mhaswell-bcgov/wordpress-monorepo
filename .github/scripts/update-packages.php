@@ -22,7 +22,6 @@ $newEntry = array_merge($localMetadata, [
 
 // Remove unnecessary properties before merging into packages
 unset($newEntry['repositories']);
-unset($newEntry['version']);
 unset($newEntry['scripts']);
 
 // Update the master array
