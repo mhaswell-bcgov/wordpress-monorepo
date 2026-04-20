@@ -70,6 +70,8 @@ jobs:
         run: |
           curl -sL https://bcgov.github.io/wordpress-monorepo/public/packages.json -o packages.json || echo '{"packages":{}}' > packages.json
 
+          mkdir public
+
           php .github/scripts/update-packages.php
           
       - name: Deploy to GH Pages
