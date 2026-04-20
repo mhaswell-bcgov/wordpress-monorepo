@@ -49,7 +49,7 @@ jobs:
         run: npx nx run ${{ steps.vars.outputs.name }}:composer-install
 
       - name: Nx Build
-        run: npx nx ${{ steps.vars.outputs.name }}:build
+        run: npx nx run ${{ steps.vars.outputs.name }}:build
 
       - name: Zip Artifacts
         run: git archive --output=dist.zip ${{ steps.vars.outputs.tag }} ${{ steps.vars.outputs.type }}/${{ steps.vars.outputs.name }}
