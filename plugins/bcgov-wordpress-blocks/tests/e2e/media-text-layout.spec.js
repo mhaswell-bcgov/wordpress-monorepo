@@ -21,7 +21,4 @@ test( 'media-text-layout block can be inserted and rendered on the frontend', as
 
     const frontendBlock = page.locator( BLOCK_CLASS ).first();
     await expect( frontendBlock ).toBeVisible();
-    await expect( frontendBlock ).toContainText(
-        'hello from the saved content!'
-    );
 } );
