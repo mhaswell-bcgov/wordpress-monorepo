@@ -4,6 +4,7 @@
             "v1.0.0-alpha18": {
                 "name": "bcgov-plugin/bcgov-wordpress-blocks",
                 "description": "Plugin containing blocks intended to be used with the Design System WordPress Theme suite of products.",
+                "version": "v1.0.0-alpha18",
                 "type": "wordpress-plugin",
                 "license": "Apache-2.0",
                 "require-dev": {
