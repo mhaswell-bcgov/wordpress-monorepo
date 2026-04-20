@@ -31,9 +31,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Install Composer dependencies
-        run: npx nx run ${{ steps.vars.outputs.name }}:composer-install
-
       - name: Parse Tag
         id: vars
         shell: bash
@@ -43,6 +40,9 @@ jobs:
           echo "name=${TAG%/*}" >> $GITHUB_OUTPUT
           echo "version=${TAG##*/}" >> $GITHUB_OUTPUT
           echo "path=$(npx nx show project ${name} --json | jq -r .root)" >> $GITHUB_OUTPUT
+
+      - name: Install Composer dependencies
+        run: npx nx run ${{ steps.vars.outputs.name }}:composer-install
 
       - name: Nx Build
         run: npx nx run ${{ steps.vars.outputs.name }}:build
