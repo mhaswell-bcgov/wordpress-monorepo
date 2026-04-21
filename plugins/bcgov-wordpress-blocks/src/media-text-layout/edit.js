@@ -1,10 +1,10 @@
-/**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
- */
-import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
+import {
+    useBlockProps,
+    InnerBlocks,
+    InspectorControls,
+} from '@wordpress/block-editor';
+
+import { PanelBody, ToggleControl } from '@wordpress/components';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -32,16 +32,39 @@ const TEMPLATE = [
  * editor. This represents what the editor will render when the block is used.
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#edit
- *
+ * @param {Object}   props               Block props.
+ * @param {Object}   props.attributes    Persisted attributes.
+ * @param {Function} props.setAttributes Updates attributes.
  * @return {Element} Element to render.
  */
-const Edit = () => {
-    const blockProps = useBlockProps( {} );
+const Edit = ( { attributes, setAttributes } ) => {
+    const { imagePosition } = attributes;
+
+    const blockProps = useBlockProps( {
+        className:
+            'right' === imagePosition ? 'is-image-right' : 'is-image-left',
+    } );
 
     return (
-        <div { ...blockProps }>
-            <InnerBlocks template={ TEMPLATE } templateLock={ true } />
-        </div>
+        <>
+            <InspectorControls>
+                <PanelBody title="Layout" initialOpen={ true }>
+                    <ToggleControl
+                        label="Image on right"
+                        checked={ 'right' === imagePosition }
+                        onChange={ ( value ) =>
+                            setAttributes( {
+                                imagePosition: value ? 'right' : 'left',
+                            } )
+                        }
+                    />
+                </PanelBody>
+            </InspectorControls>
+
+            <div { ...blockProps }>
+                <InnerBlocks template={ TEMPLATE } templateLock="all" />
+            </div>
+        </>
     );
 };
 
