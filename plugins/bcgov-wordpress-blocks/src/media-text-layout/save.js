@@ -12,11 +12,18 @@ import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
  * editor into `post_content`.
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#save
- *
+ * @param {Object} props            Block props.
+ * @param {Object} props.attributes Persisted attributes.
  * @return {Element} Element to render.
  */
-const save = () => {
-    const blockProps = useBlockProps.save();
+const save = ( { attributes } ) => {
+    const { imagePosition } = attributes;
+
+    const blockProps = useBlockProps.save( {
+        className: [
+            'right' === imagePosition ? 'is-image-right' : 'is-image-left',
+        ].join( ' ' ),
+    } );
 
     return (
         <div { ...blockProps }>

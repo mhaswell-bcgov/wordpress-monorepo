@@ -5,10 +5,7 @@
     "version": "0.0.1",
     "title": "Media & Text Layout",
     "category": "media",
-    "keywords": [
-    "image",
-    "design system"
-    ],
+    "keywords": ["image", "design system"],
     "icon": "format-image",
     "description": "Set media and words side-by-side with adjustable layout.",
     "example": {},
@@ -27,6 +24,12 @@
         "spacing": {
             "padding": true,
             "margin": true
+        }
+    },
+    "attributes": {
+        "imagePosition": {
+            "type": "string",
+            "default": "left"
         }
     },
     "textdomain": "bcgov-wordpress-blocks",
