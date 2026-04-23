@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { __, _x } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 /* eslint-disable import/no-unresolved -- @wordpress/components is a runtime external; see package.json */
 import {
@@ -9,9 +9,8 @@ import {
     Button,
     PanelBody,
     SearchControl,
+    SelectControl,
     TextControl,
-    ToggleGroupControl,
-    ToggleGroupControlOption,
     ToggleControl,
 } from '@wordpress/components';
 /* eslint-enable import/no-unresolved */
@@ -45,33 +44,18 @@ const Edit = ( { attributes, setAttributes } ) => {
         className: getIconWrapperClasses( { iconSize } ),
     } );
 
-    const sizeButtons = [
+    const sizeSelectOptions = [
         {
             value: 'small',
-            short: _x(
-                'S',
-                'abbreviation for small icon size',
-                'bcgov-wordpress-blocks'
-            ),
-            label: __( 'Small', 'bcgov-wordpress-blocks' ),
+            label: __( 'Small (20px)', 'bcgov-wordpress-blocks' ),
         },
         {
             value: 'medium',
-            short: _x(
-                'M',
-                'abbreviation for medium icon size',
-                'bcgov-wordpress-blocks'
-            ),
-            label: __( 'Medium', 'bcgov-wordpress-blocks' ),
+            label: __( 'Medium (24px)', 'bcgov-wordpress-blocks' ),
         },
         {
             value: 'large',
-            short: _x(
-                'L',
-                'abbreviation for large icon size',
-                'bcgov-wordpress-blocks'
-            ),
-            label: __( 'Large', 'bcgov-wordpress-blocks' ),
+            label: __( 'Larger (30px)', 'bcgov-wordpress-blocks' ),
         },
     ];
     const filteredIcons = ICON_ALLOWLIST.filter( ( option ) => {
@@ -140,40 +124,16 @@ const Edit = ( { attributes, setAttributes } ) => {
                             ) ) }
                         </div>
                     </BaseControl>
-                    <BaseControl
-                        id="bcgov-wp-blocks-icon-size"
-                        label={ __( 'Size', 'bcgov-wordpress-blocks' ) }
+                    <SelectControl
+                        __next40pxDefaultSize
                         __nextHasNoMarginBottom
-                    >
-                        <ToggleGroupControl
-                            className="bcgov-wp-blocks-icon-size-buttons"
-                            label={ __(
-                                'Icon size',
-                                'bcgov-wordpress-blocks'
-                            ) }
-                            __next40pxDefaultSize
-                            __nextHasNoMarginBottom
-                            value={ iconSize }
-                            onChange={ ( value ) =>
-                                value
-                                    ? setAttributes( { iconSize: value } )
-                                    : null
-                            }
-                            isBlock
-                            hideLabelFromVision
-                        >
-                            { sizeButtons.map( ( { value, short, label } ) => (
-                                <ToggleGroupControlOption
-                                    key={ value }
-                                    value={ value }
-                                    label={ label }
-                                    aria-label={ label }
-                                >
-                                    { short }
-                                </ToggleGroupControlOption>
-                            ) ) }
-                        </ToggleGroupControl>
-                    </BaseControl>
+                        label={ __( 'Size', 'bcgov-wordpress-blocks' ) }
+                        value={ iconSize }
+                        options={ sizeSelectOptions }
+                        onChange={ ( value ) =>
+                            setAttributes( { iconSize: value } )
+                        }
+                    />
                     <ToggleControl
                         __nextHasNoMarginBottom
                         label={ __( 'Decorative', 'bcgov-wordpress-blocks' ) }
