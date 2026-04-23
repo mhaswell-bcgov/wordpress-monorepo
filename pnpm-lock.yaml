@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@fortawesome/fontawesome-free':
+        specifier: 7.2.0
+        version: 7.2.0
       '@nx/devkit':
         specifier: 22.5.4
         version: 22.5.4(nx@22.5.0(@swc-node/register@1.11.1(@swc/core@1.15.21(@swc/helpers@0.5.20))(@swc/types@0.1.26)(typescript@5.9.3))(@swc/core@1.15.21(@swc/helpers@0.5.20)))
@@ -39,22 +42,22 @@ importers:
         specifier: workspace:*
         version: link:packages/e2e
       '@wordpress/block-editor':
-        specifier: latest
+        specifier: 15.17.0
         version: 15.17.0(@date-fns/tz@1.4.1)(@emotion/is-prop-valid@1.4.0)(@types/react-dom@18.3.7(@types/react@18.3.28))(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(stylelint@16.26.1(typescript@5.9.3))
       '@wordpress/blocks':
-        specifier: latest
+        specifier: 15.17.0
         version: 15.17.0(react@18.3.1)
       '@wordpress/e2e-test-utils-playwright':
         specifier: ^1.42.0
         version: 1.42.0(@playwright/test@1.58.2)(@types/node@20.19.9)
       '@wordpress/element':
-        specifier: latest
+        specifier: 6.44.0
         version: 6.44.0
       '@wordpress/env':
         specifier: ^11.2.0
         version: 11.2.0(@types/node@20.19.9)
       '@wordpress/i18n':
-        specifier: latest
+        specifier: 6.17.0
         version: 6.17.0
       '@wordpress/scripts':
         specifier: ^31.7.0
