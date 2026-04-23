@@ -21,10 +21,6 @@
 	margin: 0;
 }
 
-.bcgov-wp-blocks-icon-selected {
-	margin-top: 0.5rem;
-}
-
 .bcgov-wp-blocks-icon-size-buttons {
 	display: flex;
 	width: 100%;
@@ -33,5 +29,15 @@
 .bcgov-wp-blocks-icon-size-buttons .components-button {
 	flex: 1;
 	justify-content: center;
+}
+
+.bcgov-wp-blocks-icon-size-buttons,
+.components-toggle-control,
+.components-base-control:has(.components-text-control__input) {
+	margin-bottom: 0;
+}
+
+.components-base-control:has(.bcgov-wp-blocks-icon-size-buttons) {
+	margin-bottom: 0.75rem;
 }
 

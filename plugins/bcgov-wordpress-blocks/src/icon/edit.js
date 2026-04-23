@@ -1,16 +1,16 @@
 /**
  * WordPress dependencies
  */
-import { __, _x } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 /* eslint-disable import/no-unresolved -- @wordpress/components is a runtime external; see package.json */
 import {
     BaseControl,
     Button,
-    ButtonGroup,
     PanelBody,
     SearchControl,
-    Notice,
+    SelectControl,
+    TextControl,
     ToggleControl,
 } from '@wordpress/components';
 /* eslint-enable import/no-unresolved */
@@ -18,7 +18,8 @@ import {
 /**
  * Internal dependencies
  */
-import { getIconWrapperClasses } from './icon-classes';
+import { getIconGlyphA11yProps } from './icon-accessibility';
+import { getIconWrapperClasses, isDecorativeMode } from './icon-classes';
 import { ICON_ALLOWLIST, ICON_ALLOWLIST_MAP } from './icon-allowlist';
 import './editor.scss';
 
@@ -31,46 +32,32 @@ import './editor.scss';
  * @return {import('react').ReactElement} Block editor UI.
  */
 const Edit = ( { attributes, setAttributes } ) => {
-    const { iconId, iconSize, isDecorative } = attributes;
+    const { iconId, iconSize, isDecorative, accessibleName } = attributes;
     const { useState } = wp.element;
     const [ iconQuery, setIconQuery ] = useState( '' );
 
+    const selectedIcon = ICON_ALLOWLIST_MAP[ iconId ];
+
+    const decorative = isDecorativeMode( isDecorative );
+
     const blockProps = useBlockProps( {
-        className: getIconWrapperClasses( { iconSize, isDecorative } ),
+        className: getIconWrapperClasses( { iconSize } ),
     } );
 
-    const sizeButtons = [
+    const sizeSelectOptions = [
         {
             value: 'small',
-            short: _x(
-                'S',
-                'abbreviation for small icon size',
-                'bcgov-wordpress-blocks'
-            ),
-            label: __( 'Small', 'bcgov-wordpress-blocks' ),
+            label: __( 'Small (20px)', 'bcgov-wordpress-blocks' ),
         },
         {
             value: 'medium',
-            short: _x(
-                'M',
-                'abbreviation for medium icon size',
-                'bcgov-wordpress-blocks'
-            ),
-            label: __( 'Medium', 'bcgov-wordpress-blocks' ),
+            label: __( 'Medium (24px)', 'bcgov-wordpress-blocks' ),
         },
         {
             value: 'large',
-            short: _x(
-                'L',
-                'abbreviation for large icon size',
-                'bcgov-wordpress-blocks'
-            ),
-            label: __( 'Large', 'bcgov-wordpress-blocks' ),
+            label: __( 'Larger (30px)', 'bcgov-wordpress-blocks' ),
         },
     ];
-
-    const selectedIcon = ICON_ALLOWLIST_MAP[ iconId ];
-
     const filteredIcons = ICON_ALLOWLIST.filter( ( option ) => {
         const query = iconQuery.trim().toLowerCase();
         if ( ! query ) {
@@ -84,10 +71,7 @@ const Edit = ( { attributes, setAttributes } ) => {
     } );
 
     let previewNode = (
-        <span
-            className="bcgov-wp-blocks-icon__preview"
-            aria-hidden={ isDecorative ? true : undefined }
-        >
+        <span className="bcgov-wp-blocks-icon__preview">
             { __( 'Icon', 'bcgov-wordpress-blocks' ) }
         </span>
     );
@@ -96,7 +80,7 @@ const Edit = ( { attributes, setAttributes } ) => {
         previewNode = (
             <i
                 className={ `bcgov-wp-blocks-icon__preview ${ selectedIcon.faClass }` }
-                aria-hidden={ isDecorative ? true : undefined }
+                { ...getIconGlyphA11yProps( attributes ) }
             />
         );
     }
@@ -114,7 +98,7 @@ const Edit = ( { attributes, setAttributes } ) => {
                         __nextHasNoMarginBottom
                     >
                         <SearchControl
-                            __next40pxDefaultSize
+                            __nextHasNoMarginBottom
                             value={ iconQuery }
                             onChange={ setIconQuery }
                             placeholder={ __(
@@ -126,7 +110,6 @@ const Edit = ( { attributes, setAttributes } ) => {
                             { filteredIcons.map( ( { id, label, faClass } ) => (
                                 <Button
                                     key={ id }
-                                    __next40pxDefaultSize
                                     variant={
                                         iconId === id ? 'primary' : 'secondary'
                                     }
@@ -140,67 +123,54 @@ const Edit = ( { attributes, setAttributes } ) => {
                                 </Button>
                             ) ) }
                         </div>
-                        { iconId ? (
-                            <Notice
-                                status="info"
-                                isDismissible={ false }
-                                className="bcgov-wp-blocks-icon-selected"
-                            >
-                                { __(
-                                    'Selected icon:',
-                                    'bcgov-wordpress-blocks'
-                                ) }{ ' ' }
-                                <code>{ selectedIcon?.id || iconId }</code>
-                            </Notice>
-                        ) : null }
                     </BaseControl>
-                    <BaseControl
-                        id="bcgov-wp-blocks-icon-size"
-                        label={ __( 'Size', 'bcgov-wordpress-blocks' ) }
-                        __nextHasNoMarginBottom
-                    >
-                        <ButtonGroup
-                            className="bcgov-wp-blocks-icon-size-buttons"
-                            aria-label={ __(
-                                'Icon size',
-                                'bcgov-wordpress-blocks'
-                            ) }
-                        >
-                            { sizeButtons.map( ( { value, short, label } ) => (
-                                <Button
-                                    key={ value }
-                                    __next40pxDefaultSize
-                                    variant={
-                                        iconSize === value
-                                            ? 'primary'
-                                            : 'secondary'
-                                    }
-                                    aria-label={ label }
-                                    aria-pressed={ iconSize === value }
-                                    onClick={ () =>
-                                        setAttributes( {
-                                            iconSize: value,
-                                        } )
-                                    }
-                                >
-                                    { short }
-                                </Button>
-                            ) ) }
-                        </ButtonGroup>
-                    </BaseControl>
-                    <ToggleControl
+                    <SelectControl
                         __next40pxDefaultSize
+                        __nextHasNoMarginBottom
+                        label={ __( 'Size', 'bcgov-wordpress-blocks' ) }
+                        value={ iconSize }
+                        options={ sizeSelectOptions }
+                        onChange={ ( value ) =>
+                            setAttributes( { iconSize: value } )
+                        }
+                    />
+                    <ToggleControl
                         __nextHasNoMarginBottom
                         label={ __( 'Decorative', 'bcgov-wordpress-blocks' ) }
                         help={ __(
                             'Decorative icons are hidden from assistive technology when implemented.',
                             'bcgov-wordpress-blocks'
                         ) }
-                        checked={ isDecorative }
+                        checked={ decorative }
                         onChange={ ( value ) =>
                             setAttributes( { isDecorative: value } )
                         }
                     />
+                    { ! decorative ? (
+                        <TextControl
+                            __next40pxDefaultSize
+                            __nextHasNoMarginBottom
+                            label={ __(
+                                'Accessible name',
+                                'bcgov-wordpress-blocks'
+                            ) }
+                            help={ __(
+                                'Short description for screen readers when the icon is meaningful. Leave empty to use the icon’s picker label (e.g. Home).',
+                                'bcgov-wordpress-blocks'
+                            ) }
+                            value={ accessibleName }
+                            onChange={ ( value ) =>
+                                setAttributes( { accessibleName: value } )
+                            }
+                            placeholder={
+                                selectedIcon?.label ||
+                                __(
+                                    'Uses icon label if empty',
+                                    'bcgov-wordpress-blocks'
+                                )
+                            }
+                        />
+                    ) : null }
                 </PanelBody>
             </InspectorControls>
             <div { ...blockProps }>{ previewNode }</div>
