@@ -19,7 +19,3 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-metadata/#view-script
  */
-
-/* eslint-disable no-console */
-console.log( 'Hello World! This is Media Text Layout block plugin!' );
-/* eslint-enable no-console */

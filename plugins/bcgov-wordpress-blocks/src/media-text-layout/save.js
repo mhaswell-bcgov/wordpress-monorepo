@@ -4,7 +4,7 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
 
 /**
  * The save function defines the way in which the different attributes should
@@ -12,14 +12,23 @@ import { useBlockProps } from '@wordpress/block-editor';
  * editor into `post_content`.
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#save
- *
+ * @param {Object} props            Block props.
+ * @param {Object} props.attributes Persisted attributes.
  * @return {Element} Element to render.
  */
-const save = () => {
+const save = ( { attributes } ) => {
+    const { imagePosition } = attributes;
+
+    const blockProps = useBlockProps.save( {
+        className: [
+            'right' === imagePosition ? 'is-image-right' : 'is-image-left',
+        ].join( ' ' ),
+    } );
+
     return (
-        <p { ...useBlockProps.save() }>
-            { 'Media Text Layout - hello from the saved content!' }
-        </p>
+        <div { ...blockProps }>
+            <InnerBlocks.Content />
+        </div>
     );
 };
 

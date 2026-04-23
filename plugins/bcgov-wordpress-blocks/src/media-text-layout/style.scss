@@ -6,7 +6,31 @@
  */
 
 .wp-block-bcgov-wordpress-blocks-media-text-layout {
-    background-color: #21759b;
-    color: #fff;
-    padding: 2px;
+    display: flex;
+    gap: 1.5rem;
+
+    .wp-block-image {
+        flex: 0 0 25%;
+        max-width: 25%;
+        margin: 0;
+    }
+
+    .wp-block-group.media-text-content {
+        flex: 0 0 75%;
+        max-width: 75%;
+    }
+
+    &.is-image-right {
+        flex-direction: row-reverse;
+    }
+    
+    @media (max-width: 689px) {
+        flex-direction: column;
+
+        .wp-block-image,
+        .wp-block-group.media-text-content {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+    }
 }

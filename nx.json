@@ -9,7 +9,7 @@
                 "cwd": "{projectRoot}"
             },
             "cache": true,
-            "inputs": ["{projectRoot}/composer.json"],
+            "inputs": ["{projectRoot}/composer.*"],
             "outputs": ["{projectRoot}/vendor"]
         },
         "build": {
@@ -22,7 +22,6 @@
             },
             "dependsOn": ["^build"],
             "cache": true,
-            "inputs": ["{projectRoot}"],
             "outputs": ["{projectRoot}/dist"]
         },
         "start": {
@@ -35,7 +34,6 @@
             },
             "dependsOn": ["^build"],
             "continuous": true,
-            "inputs": ["{projectRoot}"],
             "outputs": ["{projectRoot}/dist"]
         },
         "test-integration": {

@@ -25,6 +25,7 @@
         "@fortawesome/fontawesome-free": "latest",
         "@wordpress/block-editor": "latest",
         "@wordpress/blocks": "latest",
+        "@wordpress/components": "latest",
         "@wordpress/i18n": "latest"
     },
     "devDependencies": {
