@@ -7,41 +7,40 @@ import { useBlockProps } from '@wordpress/block-editor';
 /**
  * Internal dependencies
  */
+import {
+    getIconGlyphA11yProps,
+    getIconWrapperA11yProps,
+} from './icon-accessibility';
 import { ICON_ALLOWLIST_MAP } from './icon-allowlist';
 import { getIconWrapperClasses } from './icon-classes';
 
 /**
- * Static markup for the Icon block (attribute validation).
+ * Static markup for the Icon block (serialized in post content).
+ * FA glyph uses `<i>`; placeholder uses `<span>` with visible text.
  *
  * @param {Object} props            Block props.
  * @param {Object} props.attributes Persisted attributes.
  * @return {import('react').ReactElement} Saved output.
  */
 const save = ( { attributes } ) => {
-    const { iconId, iconSize, isDecorative } = attributes;
+    const { iconId, iconSize } = attributes;
     const selectedIcon = ICON_ALLOWLIST_MAP[ iconId ];
 
     const blockProps = useBlockProps.save( {
-        className: getIconWrapperClasses( { iconSize, isDecorative } ),
+        className: getIconWrapperClasses( { iconSize } ),
+        ...getIconWrapperA11yProps( attributes, { forSave: true } ),
     } );
 
-    let iconNode = (
-        <span
-            className="bcgov-wp-blocks-icon__preview"
-            aria-hidden={ isDecorative ? true : undefined }
-        >
+    const iconNode = selectedIcon ? (
+        <i
+            className={ `bcgov-wp-blocks-icon__preview ${ selectedIcon.faClass }` }
+            { ...getIconGlyphA11yProps( attributes, { forSave: true } ) }
+        />
+    ) : (
+        <span className="bcgov-wp-blocks-icon__preview">
             { __( 'Icon placeholder', 'bcgov-wordpress-blocks' ) }
         </span>
     );
-
-    if ( selectedIcon ) {
-        iconNode = (
-            <i
-                className={ `bcgov-wp-blocks-icon__preview ${ selectedIcon.faClass }` }
-                aria-hidden={ isDecorative ? true : undefined }
-            />
-        );
-    }
 
     return <div { ...blockProps }>{ iconNode }</div>;
 };

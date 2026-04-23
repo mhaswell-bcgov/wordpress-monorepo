@@ -1,12 +1,20 @@
 /**
+ * Whether the block is in decorative mode (strict: only real boolean `true`).
+ * Avoids truthy junk like the string `"false"` from breaking `aria-hidden` / labels.
+ *
+ * @param {unknown} value Raw `isDecorative` attribute.
+ * @return {boolean} True only when explicitly decorative.
+ */
+export const isDecorativeMode = ( value ) => true === value;
+
+/**
  * Shared class names for the Icon block wrapper (editor + saved markup).
  *
- * @param {Object}  props              Block attributes.
- * @param {string}  props.iconSize     Size token: small | medium | large.
- * @param {boolean} props.isDecorative Whether the icon is decorative only.
+ * @param {Object} props          Block attributes.
+ * @param {string} props.iconSize Size token: small | medium | large.
  * @return {string} Space-separated class string merged into useBlockProps.
  */
-export const getIconWrapperClasses = ( { iconSize, isDecorative } ) => {
+export const getIconWrapperClasses = ( { iconSize } ) => {
     const size = [ 'small', 'medium', 'large' ].includes( iconSize )
         ? iconSize
         : 'medium';
@@ -14,8 +22,5 @@ export const getIconWrapperClasses = ( { iconSize, isDecorative } ) => {
     return [
         'bcgov-wp-blocks-icon',
         `bcgov-wp-blocks-icon--size-${ size }`,
-        isDecorative ? 'bcgov-wp-blocks-icon--decorative' : '',
-    ]
-        .filter( Boolean )
-        .join( ' ' );
+    ].join( ' ' );
 };

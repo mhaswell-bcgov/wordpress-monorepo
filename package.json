@@ -27,6 +27,7 @@
         "packages/*"
     ],
     "dependencies": {
+        "@fortawesome/fontawesome-free": "latest",
         "@nx/devkit": "22.5.4",
         "@nx/plugin": "^22.6.2",
         "@playwright/test": "^1.58.2",
@@ -36,9 +37,13 @@
         "@swc/helpers": "~0.5.20",
         "@types/jest": "^30.0.0",
         "@types/node": "20.19.9",
+        "@wordpress/block-editor": "latest",
+        "@wordpress/blocks": "latest",
         "@wordpress-monorepo/e2e": "workspace:*",
+        "@wordpress/element": "latest",
         "@wordpress/e2e-test-utils-playwright": "^1.42.0",
         "@wordpress/env": "^11.2.0",
+        "@wordpress/i18n": "latest",
         "@wordpress/scripts": "^31.7.0",
         "@wordpress/stylelint-config": "^23.34.0",
         "eslint-plugin-playwright": "^2.10.1",

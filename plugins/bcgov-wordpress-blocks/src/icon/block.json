@@ -20,6 +20,10 @@
         "isDecorative": {
             "type": "boolean",
             "default": false
+        },
+        "accessibleName": {
+            "type": "string",
+            "default": ""
         }
     },
     "supports": {
@@ -42,6 +46,5 @@
     "textdomain": "bcgov-wordpress-blocks",
     "editorScript": "file:./index.js",
     "editorStyle": "file:./index.css",
-    "style": "file:./index.css",
-    "viewScript": "file:./view.js"
+    "style": "file:./index.css"
 }
