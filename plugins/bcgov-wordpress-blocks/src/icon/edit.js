@@ -8,6 +8,7 @@ import {
     BaseControl,
     Button,
     PanelBody,
+    RadioControl,
     SearchControl,
     SelectControl,
     TextControl,
@@ -47,15 +48,15 @@ const Edit = ( { attributes, setAttributes } ) => {
     const sizeSelectOptions = [
         {
             value: 'small',
-            label: __( 'Small (20px)', 'bcgov-wordpress-blocks' ),
+            label: __( 'Small', 'bcgov-wordpress-blocks' ),
         },
         {
             value: 'medium',
-            label: __( 'Medium (24px)', 'bcgov-wordpress-blocks' ),
+            label: __( 'Medium', 'bcgov-wordpress-blocks' ),
         },
         {
             value: 'large',
-            label: __( 'Larger (30px)', 'bcgov-wordpress-blocks' ),
+            label: __( 'Larger', 'bcgov-wordpress-blocks' ),
         },
     ];
     const filteredIcons = ICON_ALLOWLIST.filter( ( option ) => {
@@ -127,13 +128,26 @@ const Edit = ( { attributes, setAttributes } ) => {
                     <SelectControl
                         __next40pxDefaultSize
                         __nextHasNoMarginBottom
-                        label={ __( 'Size', 'bcgov-wordpress-blocks' ) }
-                        value={ iconSize }
-                        options={ sizeSelectOptions }
-                        onChange={ ( value ) =>
-                            setAttributes( { iconSize: value } )
-                        }
-                    />
+                    >
+                        <RadioControl
+                            className="bcgov-wp-blocks-icon-size-radios"
+                            label={ __(
+                                'Icon size',
+                                'bcgov-wordpress-blocks'
+                            ) }
+                            hideLabelFromVision
+                            selected={ iconSize }
+                            options={ sizeButtons.map(
+                                ( { value, label } ) => ( {
+                                    label,
+                                    value,
+                                } )
+                            ) }
+                            onChange={ ( value ) =>
+                                setAttributes( { iconSize: value } )
+                            }
+                        />
+                    </BaseControl>
                     <ToggleControl
                         __nextHasNoMarginBottom
                         label={ __( 'Decorative', 'bcgov-wordpress-blocks' ) }
