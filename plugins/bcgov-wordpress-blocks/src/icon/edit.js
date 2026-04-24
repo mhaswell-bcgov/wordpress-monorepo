@@ -8,7 +8,6 @@ import {
     BaseControl,
     Button,
     PanelBody,
-    RadioControl,
     SearchControl,
     SelectControl,
     TextControl,
@@ -128,26 +127,13 @@ const Edit = ( { attributes, setAttributes } ) => {
                     <SelectControl
                         __next40pxDefaultSize
                         __nextHasNoMarginBottom
-                    >
-                        <RadioControl
-                            className="bcgov-wp-blocks-icon-size-radios"
-                            label={ __(
-                                'Icon size',
-                                'bcgov-wordpress-blocks'
-                            ) }
-                            hideLabelFromVision
-                            selected={ iconSize }
-                            options={ sizeButtons.map(
-                                ( { value, label } ) => ( {
-                                    label,
-                                    value,
-                                } )
-                            ) }
-                            onChange={ ( value ) =>
-                                setAttributes( { iconSize: value } )
-                            }
-                        />
-                    </BaseControl>
+                        label={ __( 'Icon size', 'bcgov-wordpress-blocks' ) }
+                        value={ iconSize }
+                        options={ sizeSelectOptions }
+                        onChange={ ( value ) =>
+                            setAttributes( { iconSize: value } )
+                        }
+                    />
                     <ToggleControl
                         __nextHasNoMarginBottom
                         label={ __( 'Decorative', 'bcgov-wordpress-blocks' ) }
