@@ -136,7 +136,7 @@ const Edit = ( { attributes, setAttributes } ) => {
                                 </Button>
                             ) ) }
                         </div>
-                        { filteredIconCount === 0 ? (
+                        { 0 === filteredIconCount ? (
                             <p className="bcgov-wp-blocks-icon-picker-empty">
                                 { __(
                                     'No icons match your search.',
