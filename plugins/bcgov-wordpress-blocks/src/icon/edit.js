@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 /* eslint-disable import/no-unresolved -- @wordpress/components is a runtime external; see package.json */
 import {
@@ -69,6 +69,8 @@ const Edit = ( { attributes, setAttributes } ) => {
             option.id.toLowerCase().includes( query )
         );
     } );
+    const totalIconCount = ICON_ALLOWLIST.length;
+    const filteredIconCount = filteredIcons.length;
 
     let previewNode = (
         <span className="bcgov-wp-blocks-icon__preview">
@@ -106,6 +108,17 @@ const Edit = ( { attributes, setAttributes } ) => {
                                 'bcgov-wordpress-blocks'
                             ) }
                         />
+                        <p className="bcgov-wp-blocks-icon-picker-meta">
+                            { sprintf(
+                                /* translators: 1: number of shown icons, 2: total icons */
+                                __(
+                                    'Showing %1$d of %2$d icons',
+                                    'bcgov-wordpress-blocks'
+                                ),
+                                filteredIconCount,
+                                totalIconCount
+                            ) }
+                        </p>
                         <div className="bcgov-wp-blocks-icon-picker-list">
                             { filteredIcons.map( ( { id, label, faClass } ) => (
                                 <Button
@@ -123,6 +136,14 @@ const Edit = ( { attributes, setAttributes } ) => {
                                 </Button>
                             ) ) }
                         </div>
+                        { filteredIconCount === 0 ? (
+                            <p className="bcgov-wp-blocks-icon-picker-empty">
+                                { __(
+                                    'No icons match your search.',
+                                    'bcgov-wordpress-blocks'
+                                ) }
+                            </p>
+                        ) : null }
                     </BaseControl>
                     <SelectControl
                         __next40pxDefaultSize
