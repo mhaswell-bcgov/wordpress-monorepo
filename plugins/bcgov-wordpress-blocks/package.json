@@ -26,6 +26,8 @@
         "@wordpress/block-editor": "latest",
         "@wordpress/blocks": "latest",
         "@wordpress/components": "latest",
+        "@wordpress/core-data": "latest",
+        "@wordpress/data": "latest",
         "@wordpress/i18n": "latest"
     },
     "devDependencies": {
