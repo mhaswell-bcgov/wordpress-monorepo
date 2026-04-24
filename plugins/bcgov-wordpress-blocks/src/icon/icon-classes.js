@@ -11,11 +11,11 @@ export const isDecorativeMode = ( value ) => true === value;
  * Shared class names for the Icon block wrapper (editor + saved markup).
  *
  * @param {Object} props          Block attributes.
- * @param {string} props.iconSize Size token: small | medium | large.
+ * @param {string} props.iconSize Size token: small | medium | large | xlarge.
  * @return {string} Space-separated class string merged into useBlockProps.
  */
 export const getIconWrapperClasses = ( { iconSize } ) => {
-    const size = [ 'small', 'medium', 'large' ].includes( iconSize )
+    const size = [ 'small', 'medium', 'large', 'xlarge' ].includes( iconSize )
         ? iconSize
         : 'medium';
 
