@@ -128,6 +128,7 @@ npx nx import https://github.com/bcgov/design-system-wordpress-theme themes/desi
     - `bcgov-wordpress-blocks/v100-testing-tag` is not valid because `v100-testing-tag` is not a valid semver.
 1. The `tag.yml` workflow packages and indexes the new version. See the [workflows README for details](.github/workflows/README.md).
 1. The package is now able to be consumed via Composer. The required `composer.json` configuration:
+
     ```json
     "repositories": [
         ...
