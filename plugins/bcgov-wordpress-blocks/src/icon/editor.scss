@@ -48,21 +48,21 @@
 }
 
 .bcgov-wp-blocks-icon--size-small .bcgov-wp-blocks-icon__preview {
+	width: 16px;
+	height: 16px;
+	font-size: 16px;
+}
+
+.bcgov-wp-blocks-icon--size-medium .bcgov-wp-blocks-icon__preview {
 	width: 20px;
 	height: 20px;
 	font-size: 20px;
 }
 
-.bcgov-wp-blocks-icon--size-medium .bcgov-wp-blocks-icon__preview {
+.bcgov-wp-blocks-icon--size-large .bcgov-wp-blocks-icon__preview {
 	width: 24px;
 	height: 24px;
 	font-size: 24px;
-}
-
-.bcgov-wp-blocks-icon--size-large .bcgov-wp-blocks-icon__preview {
-	width: 30px;
-	height: 30px;
-	font-size: 30px;
 }
 
 .bcgov-wp-blocks-icon-size-buttons {
@@ -85,3 +85,9 @@
 	margin-bottom: 0.75rem;
 }
 
+
+.bcgov-wp-blocks-icon--size-xlarge .bcgov-wp-blocks-icon__preview {
+	width: 32px;
+	height: 32px;
+	font-size: 32px;
+}

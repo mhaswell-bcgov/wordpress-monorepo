@@ -55,7 +55,11 @@ const Edit = ( { attributes, setAttributes } ) => {
         },
         {
             value: 'large',
-            label: __( 'Larger', 'bcgov-wordpress-blocks' ),
+            label: __( 'Large', 'bcgov-wordpress-blocks' ),
+        },
+        {
+            value: 'xlarge',
+            label: __( 'XLarge', 'bcgov-wordpress-blocks' ),
         },
     ];
     const filteredIcons = ICON_ALLOWLIST.filter( ( option ) => {
