@@ -3,7 +3,7 @@
  * Plugin Name:       Bcgov WordPress Blocks
  * Plugin URI:        https://github.com/bcgov/bcgov-wordpress-blocks
  * Description:       Plugin containing blocks intended to be used with the Design System WordPress Theme suite of products.
- * Version:           0.0.1
+ * Version:           1.0.0
  * Requires at least: 6.8
  * Requires PHP:      7.4
  * Author:            govwordpress@gov.bc.ca
