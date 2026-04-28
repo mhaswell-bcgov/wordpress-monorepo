@@ -1,7 +1,7 @@
 # https://github.com/actions/labeler
 monorepo:
     - changed-files:
-          - any-glob-to-any-file:
+          - all-globs-to-any-file:
                 - '**'
                 - '!plugins/**'
                 - '!themes/**'
