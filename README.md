@@ -15,6 +15,60 @@ The primary goals are consistency, shared tooling, and safer long-term maintenan
 1. Build all projects: `pnpm build`.
 1. Serve the desired project(s) by running `npx nx wp-env-start` from their subdirectories.
 
+## Usage
+
+### Monorepo-level scripts
+
+Monorepo-level scripts are found in the root `package.json` file. These scripts run on the entire monorepo, rather than on a specific project and are run using `pnpm`, eg. `pnpm build` runs the build script on all projects. These fall into two categories:
+
+1. Scripts that wrap an nx target. These are using nx targets (see [below for information about nx targets/scripts](#project-level-scripts)) to run the same script on all targets simultaneously. The underlying command typically has the format: `npx nx run-many -t <target>`. This says: use `npx` to run `nx`'s `run-many` command (causes the command to be run on all projects that support the target) on the given `<target>`.
+1. npm-native scripts. These are npm-native scripts that are used to run monorepo-wide scripts that don't use nx at all, mainly linting scripts as linting is performed at the monorepo-level as opposed to the project-level.
+
+#### List of monorepo-level scripts
+
+| Script | Description | Type |
+| --- | --- | --- |
+| composer-install | Installs Composer dependencies and builds autoload files for all projects. | nx |
+| build | Builds all projects using [`wp-scripts build`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#build). | nx |
+| start | Starts all projects using [`wp-scripts start`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#start). | nx |
+| test-e2e | Runs e2e tests on all projects using [`wp-scripts test-playwright`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#test-playwright). | nx |
+| test-integration | Runs PHP integration tests on all projects through `wp-env`, running the `composer test` script from each project's `composer.json`. These tests use `phpunit`. | nx |
+| test-screenshot | Runs regression/screenshot tests on all projects using [`wp-scripts test-playwright`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#test-playwright). This currently generates and saves new screenshots as it's not yet possible to generate consistent screenshots between local dev machines and GitHub runners. In the future, this should only perform the tests comparing screenshots, not save new ones. | nx |
+| test-unit-js | Currently unimplemented as we don't yet have any unit tests to run. In the future, this should run JavaScript unit tests on all projects using [`wp-scripts test-unit-js`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#test-unit-js). | nx |
+| test-unit-php | Currently unimplemented as we don't yet have any unit tests to run. In the future, this should run PHP unit tests on all projects using `phpunit`. | nx |
+| lint | Convenience script to run all lint scripts below sequentially. | npm |
+| lint-js | Lints all JS and TS code across the monorepo using [`wp-scripts lint-js`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#lint-js). | npm |
+| fix-js | Runs the above script with the `--fix` flag to fix any automatically fixable linting issues. | npm |
+| lint-css | Lints all SCSS and CSS code across the monorepo using [`wp-scripts lint-style`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#lint-style). | npm |
+| fix-css | Runs the above script with the `--fix` flag to fix any automatically fixable linting issues. | npm |
+| lint-php | Lints all PHP code across the monorepo using the root `composer.json`'s `lint-php` script. This linting uses `phpcs`. | npm |
+| fix-php | Runs the above script with using `phpcbf` to fix any automatically fixable linting issues. | npm |
+| fix-html | Fixes all HTML linting issues across the monorepo using `js-beautify`. Note that there is no equivalent linting script for HTML currently. | npm |
+| lint-md | Lints all JS and TS code across the monorepo using [`wp-scripts lint-md-docs`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#lint-md-docs). | npm |
+| fix-md | Runs the above script with the `--fix` flag to fix any automatically fixable linting issues.| npm |
+| lint-pkg-json | Lints all `package.json` files across the monorepo using [`wp-scripts lint-pkg-json`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#lint-pkg-json). | npm |
+| check-engines | Runs [`wp-scripts check-engines`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#check-engines). Note that this is currently failing to execute. | npm |
+| check-licenses | Runs [`wp-scripts check-licenses`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#check-licenses). | npm |
+| wp-env-clean | Runs [`wp-env reset`](https://github.com/WordPress/gutenberg/tree/HEAD/packages/env#wp-env-reset-environment) on all projects. | nx |
+
+### Project-level scripts
+Project-level scripts are defined in the root-level `nx.json` file's `defaultTargets` array and are run on a specific project. These scripts (will be referred to as targets going forward to match nx terminology) are run using nx, eg. `npx nx build` will run the build target on the current project (if the current working directory is an nx project). Generally, all of the information about a target is found in `nx.json` and plugins and themes implement a subset of those `defaultTargets`. The targets that a specific project has is defined in its `project.json` file's `targets` array.
+
+Note that in most cases if a project does not have a particular target defined in its `targets` array, it will simply not run that target for that project and will not cause any errors.
+
+#### List of project-level targets
+
+| Target | Description | Plugins | Themes |
+| --- | --- | --- | --- |
+| composer-install | Installs Composer dependencies and builds autoload files for all projects. | ☑️ | ☑️ |
+| build | Builds the project using [`wp-scripts build`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#build). | ☑️ | ☑️ |
+| start | Starts the project using [`wp-scripts start`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#start). | ☑️ | ☑️ |
+| test-e2e | Runs e2e tests on the project using [`wp-scripts test-playwright`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#test-playwright). | ☑️ | |
+| test-integration | Runs PHP integration tests on the project through `wp-env`, running the `composer test` script from the project's `composer.json`. These tests use `phpunit`. | ☑️ | |
+| test-screenshot | Runs regression/screenshot tests on the project using [`wp-scripts test-playwright`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#test-playwright). This currently generates and saves new screenshots as it's not yet possible to generate consistent screenshots between local dev machines and GitHub runners. In the future, this should only perform the tests comparing screenshots, not save new ones. | ☑️ | ☑️ |
+| wp-env-start | Runs [`wp-env start`](https://github.com/WordPress/gutenberg/tree/HEAD/packages/env#wp-env-start) on the project. | ☑️ | ☑️ |
+| wp-env-clean | Runs [`wp-env reset`](https://github.com/WordPress/gutenberg/tree/HEAD/packages/env#wp-env-reset-environment) on the project. | ☑️ | ☑️ |
+
 ## Nx
 
 This repository uses `nx` for various monorepo-related tasks:
@@ -176,62 +230,6 @@ pnpm install
 ```
 
 This installs root tooling and all workspace dependencies. There is no need to run `pnpm install` inside individual packages.
-
----
-
-## Usage
-
-### Monorepo-level scripts
-
-Monorepo-level scripts are found in the root `package.json` file. These scripts run on the entire monorepo, rather than on a specific project and are run using `pnpm`, eg. `pnpm build` runs the build script on all projects. These fall into two categories:
-
-1. Scripts that wrap an nx target. These are using nx targets (see below for information about nx targets/scripts) to run the same script on all targets simultaneously. The underlying command typically has the format: `npx nx run-many -t <target>`. This says: use `npx` to run `nx`'s `run-many` command (causes the command to be run on all projects that support the target) on the given `<target>`.
-1. npm-native scripts. These are npm-native scripts that don't use nx at all. These are used to run monorepo-wide scripts that don't use nx, mainly linting scripts as linting is performed at the monorepo-level as opposed to the project-level.
-
-#### List of monorepo-level scripts
-
-| Script | Description | Type |
-| --- | --- | --- |
-| composer-install | Installs Composer dependencies and builds autoload files for all projects. | nx |
-| build | Builds all projects using [`wp-scripts build`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#build). | nx |
-| start | Starts all projects using [`wp-scripts start`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#start). | nx |
-| test-e2e | Runs e2e tests on all projects using [`wp-scripts test-playwright`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#test-playwright). | nx |
-| test-integration | Runs PHP integration tests on all projects through `wp-env`, running the `composer test` script from each project's `composer.json`. These tests use `phpunit`. | nx |
-| test-screenshot | Runs regression/screenshot tests on all projects using [`wp-scripts test-playwright`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#test-playwright). This currently generates and saves new screenshots as it's not yet possible to generate consistent screenshots between local dev machines and GitHub runners. In the future, this should only perform the tests comparing screenshots, not save new ones. | nx |
-| test-unit-js | Currently unimplemented as we don't yet have any unit tests to run. In the future, this should run JavaScript unit tests on all projects using [`wp-scripts test-unit-js`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#test-unit-js). | nx |
-| test-unit-php | Currently unimplemented as we don't yet have any unit tests to run. In the future, this should run PHP unit tests on all projects using `phpunit`. | nx |
-| lint | Convenience script to run all lint scripts below sequentially. | npm |
-| lint-js | Lints all JS and TS code across the monorepo using [`wp-scripts lint-js`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#lint-js). | npm |
-| fix-js | Runs the above script with the `--fix` flag to fix any automatically fixable linting issues. | npm |
-| lint-css | Lints all SCSS and CSS code across the monorepo using [`wp-scripts lint-style`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#lint-style). | npm |
-| fix-css | Runs the above script with the `--fix` flag to fix any automatically fixable linting issues. | npm |
-| lint-php | Lints all PHP code across the monorepo using the root `composer.json`'s `lint-php` script. This linting uses `phpcs`. | npm |
-| fix-php | Runs the above script with using `phpcbf` to fix any automatically fixable linting issues. | npm |
-| fix-html | Fixes all HTML linting issues across the monorepo using `js-beautify`. Note that there is no equivalent linting script for HTML currently. | npm |
-| lint-md | Lints all JS and TS code across the monorepo using [`wp-scripts lint-md-docs`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#lint-md-docs). | npm |
-| fix-md | Runs the above script with the `--fix` flag to fix any automatically fixable linting issues.| npm |
-| lint-pkg-json | Lints all `package.json` files across the monorepo using [`wp-scripts lint-pkg-json`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#lint-pkg-json). | npm |
-| check-engines | Runs [`wp-scripts check-engines`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#check-engines). Note that this is currently failing to execute. | npm |
-| check-licenses | Runs [`wp-scripts check-licenses`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#check-licenses). | npm |
-| wp-env-clean | Runs [`wp-env reset`](https://github.com/WordPress/gutenberg/tree/HEAD/packages/env#wp-env-reset-environment) on all projects. | nx |
-
-### Project-level scripts
-Project-level scripts are defined in the root-level `nx.json` file's `defaultTargets` array and are run on a specific project. These scripts (will be referred to as targets going forward to match nx terminology) are run using nx, eg. `npx nx build` will run the build target on the current project (if the current working directory is an nx project). Generally, all of the information about a target is found in `nx.json` and plugins and themes implement a subset of those `defaultTargets`. The targets that a specific project has is defined in its `project.json` file's `targets` array.
-
-Note that in most cases if a project does not have a target defined in its `targets` array, it will simply not run for that project and will not cause any errors.
-
-#### List of project-level targets
-
-| Target | Description | Plugins | Themes |
-| --- | --- | --- | --- |
-| composer-install | Installs Composer dependencies and builds autoload files for all projects. | ☑️ | ☑️ |
-| build | Builds the project using [`wp-scripts build`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#build). | ☑️ | ☑️ |
-| start | Starts the project using [`wp-scripts start`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#start). | ☑️ | ☑️ |
-| test-e2e | Runs e2e tests on the project using [`wp-scripts test-playwright`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#test-playwright). | ☑️ | |
-| test-integration | Runs PHP integration tests on the project through `wp-env`, running the `composer test` script from the project's `composer.json`. These tests use `phpunit`. | ☑️ | |
-| test-screenshot | Runs regression/screenshot tests on the project using [`wp-scripts test-playwright`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#test-playwright). This currently generates and saves new screenshots as it's not yet possible to generate consistent screenshots between local dev machines and GitHub runners. In the future, this should only perform the tests comparing screenshots, not save new ones. | ☑️ | ☑️ |
-| wp-env-start | Runs [`wp-env start`](https://github.com/WordPress/gutenberg/tree/HEAD/packages/env#wp-env-start) on the project. | ☑️ | ☑️ |
-| wp-env-clean | Runs [`wp-env reset`](https://github.com/WordPress/gutenberg/tree/HEAD/packages/env#wp-env-reset-environment) on the project. | ☑️ | ☑️ |
 
 ---
 
