@@ -5,11 +5,20 @@ The primary goals are consistency, shared tooling, and safer long-term maintenan
 
 ## Getting started
 
+### Requirements
+The following should be installed before starting the next section:
+
+- [Node.js](https://nodejs.org/en/download/current)
+- [pnpm](https://pnpm.io/installation#using-other-package-managers)
+- [PHP 7.4](https://www.php.net/downloads.php)
+- [Composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-macos)
+- Docker (preferably [Rancher Desktop](https://rancherdesktop.io/))
+
+### Steps
+
 1. Clone this repository: `git clone https://github.com/bcgov/wordpress-monorepo`.
 1. Navigate to the repository: `cd wordpress-monorepo`.
 1. Install npm dependencies: `pnpm i`.
-    - Note: If you don't have `pnpm` installed, run `npm install -g pnpm` to install it.
-    - See the [pnpm documentation for more information](https://pnpm.io/installation#using-npm).
 1. Install monorepo-level Composer dependencies: `composer i`.
 1. Install project-level Composer dependencies and build autoload files: `pnpm composer-install`.
 1. Build all projects: `pnpm build`.
@@ -25,6 +34,9 @@ Monorepo-level scripts are found in the root `package.json` file. These scripts 
 1. npm-native scripts. These are npm-native scripts that are used to run monorepo-wide scripts that don't use nx at all, mainly linting scripts as linting is performed at the monorepo-level as opposed to the project-level.
 
 #### List of monorepo-level scripts
+
+Usage example:
+- `pnpm build` from monorepo root. Runs the `build` target on all projects.
 
 | Script | Description | Type |
 | --- | --- | --- |
@@ -52,11 +64,17 @@ Monorepo-level scripts are found in the root `package.json` file. These scripts 
 | wp-env-clean | Runs [`wp-env reset`](https://github.com/WordPress/gutenberg/tree/HEAD/packages/env#wp-env-reset-environment) on all projects. | nx |
 
 ### Project-level scripts
-Project-level scripts are defined in the root-level `nx.json` file's `defaultTargets` array and are run on a specific project. These scripts (will be referred to as targets going forward to match nx terminology) are run using nx, eg. `npx nx build` will run the build target on the current project (if the current working directory is an nx project). Generally, all of the information about a target is found in `nx.json` and plugins and themes implement a subset of those `defaultTargets`. The targets that a specific project has is defined in its `project.json` file's `targets` array.
+Project-level scripts are defined in the root-level `nx.json` file's `defaultTargets` array and are run on a specific project. These scripts (will be referred to as targets going forward to match nx terminology) are run using nx, eg. `npx nx build` will run the build target on the current project (if the current working directory is an nx project). Generally, all of the information about a target is found in `nx.json` and plugins and themes implement a subset of those `defaultTargets`. The targets that a specific project has implemented is defined in its `project.json` file's `targets` array.
 
-Note that in most cases if a project does not have a particular target defined in its `targets` array, it will simply not run that target for that project and will not cause any errors.
+Note that in most cases if a project does not have a particular target defined in its `targets` array, it will simply not run the target for that project and will not cause any errors.
 
 #### List of project-level targets
+
+Usage examples:
+- `npx nx build` from inside an nx project directory, runs the `build` target on the current project only.
+- `npx nx run <project name>:build` from anywhere in the monorepo. Runs on the specified `<project name>` only. See [nx run documentation](https://nx.dev/docs/reference/nx-commands#nx-run).
+- `npx nx run-many -t build` from anywhere in the monorepo. This runs on all projects, similar to the `pnpm build` script above. See [nx run-many documentation](https://nx.dev/docs/reference/nx-commands#nx-run-many).
+- `npx nx affected -t build` from anywhere in the monorepo. This runs on only "affected" projects. This is used, for example, in the `pr.yml` workflow. See [nx affected documentation](https://nx.dev/docs/reference/nx-commands#nx-affected).
 
 | Target | Description | Plugins | Themes |
 | --- | --- | --- | --- |
