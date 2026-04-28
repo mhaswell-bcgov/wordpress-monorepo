@@ -3,6 +3,7 @@ monorepo:
     - changed-files:
           - all-globs-to-any-file:
                 - '**'
+                - '!.github/**'
                 - '!plugins/**'
                 - '!themes/**'
 
