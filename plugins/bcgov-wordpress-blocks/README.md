@@ -1,6 +1,6 @@
 # === Bcgov WordPress Blocks ===
 
-Contributors: The BCGov Custom Web team  
+Contributors: The BCGov Custom Web team   
 Tags: block
 Tested up to: 6.8
 Stable tag: 0.0.1
