@@ -6,6 +6,7 @@ The primary goals are consistency, shared tooling, and safer long-term maintenan
 ## Getting started
 
 ### Requirements
+
 The following should be installed before starting the next section:
 
 - [Node.js](https://nodejs.org/en/download/current)
@@ -36,6 +37,7 @@ Monorepo-level scripts are found in the root `package.json` file. These scripts 
 #### List of monorepo-level scripts
 
 Usage example:
+
 - `pnpm build` from monorepo root. Runs the `build` target on all projects.
 
 | Script | Description | Type |
@@ -64,6 +66,7 @@ Usage example:
 | wp-env-clean | Runs [`wp-env reset`](https://github.com/WordPress/gutenberg/tree/HEAD/packages/env#wp-env-reset-environment) on all projects. | nx |
 
 ### Project-level scripts
+
 Project-level scripts are defined in the root-level `nx.json` file's `defaultTargets` array and are run on a specific project. These scripts (will be referred to as targets going forward to match nx terminology) are run using nx, eg. `npx nx build` will run the build target on the current project (if the current working directory is an nx project). Generally, all of the information about a target is found in `nx.json` and plugins and themes implement a subset of those `defaultTargets`. The targets that a specific project has implemented is defined in its `project.json` file's `targets` array.
 
 Note that in most cases if a project does not have a particular target defined in its `targets` array, it will simply not run the target for that project and will not cause any errors.
@@ -71,6 +74,7 @@ Note that in most cases if a project does not have a particular target defined i
 #### List of project-level targets
 
 Usage examples:
+
 - `npx nx build` from inside an nx project directory, runs the `build` target on the current project only.
 - `npx nx run <project name>:build` from anywhere in the monorepo. Runs on the specified `<project name>` only. See [nx run documentation](https://nx.dev/docs/reference/nx-commands#nx-run).
 - `npx nx run-many -t build` from anywhere in the monorepo. This runs on all projects, similar to the `pnpm build` script above. See [nx run-many documentation](https://nx.dev/docs/reference/nx-commands#nx-run-many).
