@@ -2,9 +2,12 @@ import {
     useBlockProps,
     InnerBlocks,
     InspectorControls,
+    MediaUpload,
+    MediaUploadCheck,
 } from '@wordpress/block-editor';
-
 import { PanelBody, ToggleControl } from '@wordpress/components';
+import { useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -15,16 +18,10 @@ import { PanelBody, ToggleControl } from '@wordpress/components';
 import './editor.scss';
 
 const TEMPLATE = [
-    [ 'core/image' ],
-    [
-        'core/group',
-        { className: 'media-text-content' },
-        [
-            [ 'core/heading', { placeholder: 'Heading' } ],
-            [ 'core/paragraph', { placeholder: 'Content' } ],
-            [ 'core/buttons' ],
-        ],
-    ],
+    [ 'core/heading' ],
+    [ 'core/paragraph' ],
+    [ 'core/list' ],
+    [ 'core/buttons' ],
 ];
 
 /**
@@ -38,8 +35,17 @@ const TEMPLATE = [
  * @return {Element} Element to render.
  */
 const Edit = ( { attributes, setAttributes } ) => {
-    const { imagePosition } = attributes;
+    const { imagePosition, imageId } = attributes;
+    const media = useSelect(
+        ( select ) => {
+            if ( ! imageId ) {
+                return null;
+            }
 
+            return select( coreStore ).getMedia( imageId );
+        },
+        [ imageId ]
+    );
     const blockProps = useBlockProps( {
         className:
             'right' === imagePosition ? 'is-image-right' : 'is-image-left',
@@ -62,7 +68,46 @@ const Edit = ( { attributes, setAttributes } ) => {
             </InspectorControls>
 
             <div { ...blockProps }>
-                <InnerBlocks template={ TEMPLATE } templateLock="all" />
+                <div className="layout-shell">
+                    <div className="wp-block-image">
+                        <MediaUploadCheck>
+                            <MediaUpload
+                                onSelect={ ( selectedMedia ) =>
+                                    setAttributes( {
+                                        imageId: selectedMedia?.id,
+                                    } )
+                                }
+                                allowedTypes={ [ 'image' ] }
+                                value={ imageId }
+                                render={ ( { open } ) => (
+                                    <button
+                                        type="button"
+                                        className="image-inner"
+                                        onClick={ open }
+                                    >
+                                        { media && media.source_url ? (
+                                            <img
+                                                src={ media.source_url }
+                                                alt={ media.alt_text || '' }
+                                            />
+                                        ) : (
+                                            <div className="image-placeholder">
+                                                Select Image
+                                            </div>
+                                        ) }
+                                    </button>
+                                ) }
+                            />
+                        </MediaUploadCheck>
+                    </div>
+                    <div className="inner-blocks">
+                        <InnerBlocks
+                            template={ TEMPLATE }
+                            allowedBlocks={ TEMPLATE }
+                            renderAppender={ InnerBlocks.ButtonBlockAppender }
+                        />
+                    </div>
+                </div>
             </div>
         </>
     );

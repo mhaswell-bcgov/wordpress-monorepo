@@ -5,10 +5,9 @@
     "version": "0.0.1",
     "title": "Media & Text Layout",
     "category": "media",
-    "keywords": ["image", "design system"],
+    "keywords": ["media", "image", "text", "layout", "design system"],
     "icon": "format-image",
     "description": "Set media and words side-by-side with adjustable layout.",
-    "example": {},
     "supports": {
         "html": false,
         "align": ["wide", "full"],
@@ -27,6 +26,7 @@
         }
     },
     "attributes": {
+        "imageId": { "type": "number" },
         "imagePosition": {
             "type": "string",
             "default": "left"
@@ -36,5 +36,5 @@
     "editorScript": "file:./index.js",
     "editorStyle": "file:./index.css",
     "style": "file:./style-index.css",
-    "viewScript": "file:./view.js"
+    "render": "file:./render.php"
 }
