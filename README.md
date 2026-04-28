@@ -1,4 +1,4 @@
-# WordPress Monorepo
+# WordPress Monorepo 
 
 This repository contains WordPress themes and plugins managed within a single Git monorepo.
 The primary goals are consistency, shared tooling, and safer long-term maintenance while preserving historical context.
