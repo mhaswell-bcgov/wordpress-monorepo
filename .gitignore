@@ -30,6 +30,7 @@ test-results/
 # Build files
 dist/
 build/
+public/
 
 # nx files
 .nx/cache
